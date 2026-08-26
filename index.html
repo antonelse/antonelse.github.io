@@ -303,6 +303,9 @@ body::after{
   letter-spacing:1px;
   margin: 6px 0 4px;
   color: var(--lcd-bright);
+  outline: none;
+  caret-color: var(--lcd-bright);
+  cursor: text;
   text-shadow: 0 0 8px rgba(157,255,107,0.6);
 }
 .subtitle{
@@ -723,7 +726,7 @@ footer{
     </div>
     <div style="flex:1; min-width:200px;">
       <div class="rowlabel">TRACK 01 // ABOUT</div>
-      <div class="title-big">ANTONIO GIGANTI<span class="cursor-block"></span></div>
+      <div class="title-big" id="titleBig" contenteditable="true" spellcheck="false" autocorrect="off" autocapitalize="off"><span id="titleBigText"></span><span class="cursor-block"></span></div>
       <div class="subtitle">AI &amp; Audio Engineer @ Musixmatch · Milan/Bologna, IT</div>
     </div>
   </div>
@@ -1726,6 +1729,95 @@ const SITE_DATA = {
     document.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape' && overlay.style.display === 'flex') closeOverlay();
     });
+  })();
+
+  // ---- Title-big: humanized typing effect, editable, revert-after-edit ----
+  (function(){
+    const titleEl = document.getElementById('titleBig');
+    let textEl = document.getElementById('titleBigText');
+    if(!titleEl || !textEl) return;
+
+    const NAME = 'ANTONIO GIGANTI';
+    const REVERT_DELAY_MS = 1800; // pause after user stops editing before erasing and retyping
+
+    let actionTimer = null;
+    let revertTimer = null;
+
+    function clearTimers(){
+      if(actionTimer) clearTimeout(actionTimer);
+      actionTimer = null;
+    }
+
+    // contenteditable can strip the inner spans entirely when the user
+    // deletes all content (e.g. select-all + backspace, or long backspacing).
+    // If that happens, #titleBigText and the cursor block vanish from the
+    // DOM, so writing to textEl.textContent silently does nothing even
+    // though the retype timer still fires. Rebuild the spans if missing.
+    function ensureStructure(){
+      let span = document.getElementById('titleBigText');
+      if(!span || !titleEl.contains(span)){
+        titleEl.innerHTML = '<span id="titleBigText"></span><span class="cursor-block"></span>';
+        span = document.getElementById('titleBigText');
+      }
+      textEl = span;
+      return textEl;
+    }
+
+    function typeText(text, onDone){
+      ensureStructure();
+      textEl.textContent = '';
+      let i = 0;
+      function step(){
+        if(i >= text.length){
+          if(onDone) onDone();
+          return;
+        }
+        textEl.textContent += text[i];
+        i++;
+        const ch = text[i-1];
+        let delay = 45 + Math.random() * 70;
+        if(ch === ' ') delay += 60;
+        if(ch === ',') delay += 140;
+        if(ch === '.') delay += 220;
+        actionTimer = setTimeout(step, delay);
+      }
+      step();
+    }
+
+    function eraseText(onDone){
+      ensureStructure();
+      function step(){
+        const t = textEl.textContent;
+        if(t.length === 0){
+          if(onDone) onDone();
+          return;
+        }
+        textEl.textContent = t.slice(0, -1);
+        actionTimer = setTimeout(step, 25 + Math.random() * 35);
+      }
+      step();
+    }
+
+    function revertToName(){
+      clearTimers();
+      // rebuild structure immediately (not just inside typeText/eraseText)
+      // so the eventual retype has a guaranteed target even if the div is
+      // currently completely empty.
+      ensureStructure();
+      eraseText(function(){
+        typeText(NAME);
+      });
+    }
+
+    // Whenever the user edits, wait, then erase and retype the fixed name
+    titleEl.addEventListener('input', function(){
+      clearTimers();
+      if(revertTimer) clearTimeout(revertTimer);
+      revertTimer = setTimeout(revertToName, REVERT_DELAY_MS);
+    });
+
+    // Kick off the human-style typing once on page load
+    typeText(NAME);
   })();
 
   // ---- Last modified date ----

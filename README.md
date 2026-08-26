@@ -114,6 +114,11 @@ projects) — update the corresponding `SITE_DATA` array whenever they do.
   state. All controls are keyboard-accessible (Tab + Enter/Space).
 - "SAVE & EXIT" in the footer is an easter egg (ASCII logo + typed message), not a
   real navigation action.
+- The big **title** ("ANTONIO GIGANTI") is editable (`contenteditable`) and self-heals:
+  if you type over it, delete it, or clear it entirely, it waits 1.8s after you stop
+  editing, then erases whatever's there and retypes the real name. This also survives
+  the browser stripping the inner `<span>` on full deletion (a common contenteditable
+  quirk) — the spans are rebuilt automatically before retyping if missing.
 - The footer's "last modified" date is automatic (`document.lastModified`) — no
   need to update it by hand when you edit the file.
 
