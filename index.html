@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<title>Antonio Giganti — AI &amp; Music Engineer</title>
-<meta name="description" content="Antonio Giganti — AI &amp; Music Engineer at Musixmatch, working at the intersection of machine learning, audio and lyrics technology. Portfolio, research, music and DIY builds, presented as an interactive tracker-style page.">
+<title>Antonio Giganti — AI &amp; Audio Engineer</title>
+<meta name="description" content="Antonio Giganti — AI &amp; Audio Engineer at Musixmatch, working at the intersection of machine learning, audio and lyrics technology. Portfolio, research, music and DIY builds, presented as an interactive tracker-style page">
 <link rel="canonical" href="https://antonelse.github.io/">
 
 <!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Antonio Giganti — AI &amp; Music Engineer">
-<meta property="og:description" content="AI &amp; Music Engineer at Musixmatch — machine learning, audio and lyrics technology, PhD research, and music-tech side projects. Interactive tracker-style portfolio.">
+<meta property="og:title" content="Antonio Giganti — AI &amp; Audio Engineer">
+<meta property="og:description" content="AI &amp; Audio Engineer at Musixmatch — machine learning, audio and lyrics technology, PhD research, and music-tech side projects. Interactive tracker-style portfolio">
 <meta property="og:url" content="https://antonelse.github.io/">
 <meta property="og:image" content="https://antonelse.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -20,8 +20,8 @@
 
 <!-- Twitter card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Antonio Giganti — AI &amp; Music Engineer">
-<meta name="twitter:description" content="AI &amp; Music Engineer at Musixmatch — machine learning, audio and lyrics technology.">
+<meta name="twitter:title" content="Antonio Giganti — AI &amp; Audio Engineer">
+<meta name="twitter:description" content="AI &amp; Audio Engineer at Musixmatch — machine learning, audio and lyrics technology">
 <meta name="twitter:image" content="https://antonelse.github.io/og-image.png">
 
 <!-- Favicon (pixel-art Æ) -->
@@ -198,6 +198,9 @@ body::after{
   margin-left:2px;
   opacity:0.85;
 }
+.tb-right{
+  margin-left:auto;
+}
 .vu-meter{
   display:flex;
   align-items:flex-end;
@@ -258,6 +261,21 @@ body::after{
 }
 .navmenu a.active::before{
   opacity: 0;
+}
+.tb-collapse{
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  display:flex;
+  align-items:center;
+  gap:3px;
+}
+.tb-collapse .collapse-icon{
+  font-size: 12px;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+.tb-collapse.is-active .collapse-icon{
+  transform: rotate(180deg);
 }
 
 /* ===== HEADER / SONG NAME ===== */
@@ -679,7 +697,11 @@ footer{
         <span id="crtBtn" class="tb-btn is-active" role="button" tabindex="0" aria-pressed="true" title="Toggle CRT scanline effect">▦ CRT</span>
       </span>
       <span class="tb-sep">│</span>
-      <span class="tb-rec">REC <span class="blink">●</span></span>
+      <span class="tb-rec">REC <span class="blink">■</span></span>
+      <span class="tb-sep tb-right">│</span>
+      <span id="collapseAllBtn" class="tb-btn tb-collapse" role="button" tabindex="0" aria-pressed="false" title="Collapse/expand all sections">
+        <span class="collapse-icon">⌃⌄</span> ALL
+      </span>
     </span>
   </div>
 
@@ -702,19 +724,19 @@ footer{
     <div style="flex:1; min-width:200px;">
       <div class="rowlabel">TRACK 01 // ABOUT</div>
       <div class="title-big">ANTONIO GIGANTI<span class="cursor-block"></span></div>
-      <div class="subtitle">AI &amp; Music Engineer @ Musixmatch · Bologna/Milan, IT</div>
+      <div class="subtitle">AI &amp; Audio Engineer @ Musixmatch · Milan/Bologna, IT</div>
     </div>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="k">BPM</div><div class="v" id="bpmStatVal">180</div></div>
+    <div class="stat"><div class="k">STACK</div><div class="v">AI/AUDIO</div></div>
     <div class="stat"><div class="k">YRS_EXP</div><div class="v">05</div></div>
-    <div class="stat"><div class="k">STACK</div><div class="v">AI/DSP</div></div>
+    <div class="stat"><div class="k">BPM</div><div class="v" id="bpmStatVal">180</div></div>
     <div class="stat"><div class="k">STATUS</div><div class="v">ON AIR</div></div>
   </div>
 
   <!-- LISSAJOUS VISUALIZER -->
-  <div class="phrase collapsed" id="sec-lissajous">
+  <div class="phrase" id="sec-lissajous">
     <div class="phrase-head"><span class="idx">00</span> /LISSAJOUS<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div style="border:1px solid var(--lcd-dim); background:var(--bg2); padding:8px;">
@@ -727,7 +749,7 @@ footer{
   </div>
 
   <!-- WORK EXPERIENCE -->
-  <div class="phrase" id="sec-work">
+  <div class="phrase collapsed" id="sec-work">
     <div class="phrase-head"><span class="idx">01</span> /WORK<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
@@ -746,7 +768,7 @@ footer{
   </div>
 
   <!-- EDUCATION -->
-  <div class="phrase" id="sec-education">
+  <div class="phrase collapsed" id="sec-education">
     <div class="phrase-head"><span class="idx">02</span> /EDUCATION<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
@@ -765,7 +787,7 @@ footer{
   </div>
 
   <!-- PROJECTS -->
-  <div class="phrase" id="sec-projects">
+  <div class="phrase collapsed" id="sec-projects">
     <div class="phrase-head"><span class="idx">03</span> /PROJECTS<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
 
@@ -850,7 +872,7 @@ footer{
         <tr>
           <th>STEP</th>
           <th>TITLE / VENUE</th>
-          <th>PERIOD</th>
+          <th>YEAR</th>
           <th>AUTHORS</th>
         </tr>
       </thead>
@@ -868,7 +890,7 @@ footer{
       <thead>
         <tr>
           <th>STEP</th>
-          <th>TITLE</th>
+          <th>TITLE / ORG</th>
           <th>DATE</th>
           <th>NOTE</th>
         </tr>
@@ -921,8 +943,8 @@ footer{
   </div>
 
   <footer>
-    ANTONIO GIGANTI © 2026 · <span id="saveExitBtn" style="cursor:pointer; text-decoration:underline; user-select:none;">SAVE &amp; EXIT</span>
-    <br>last modified: <span id="lastModified"></span>
+    Antonio Giganti - antonelse © 2026 · <span id="saveExitBtn" style="cursor:pointer; text-decoration:underline; user-select:none;">Save &amp; Exit</span>
+    <br>Last modified: <span id="lastModified"></span> UTC
   </footer>
 
   <div id="exitOverlay" style="display:none; position:fixed; inset:0; z-index:100; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; cursor:pointer;">
@@ -932,7 +954,7 @@ footer{
   </div>
 
   <div id="screensaverOverlay" style="display:none; position:fixed; inset:0; z-index:99; background:#000; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;">
-    <pre id="tunnelAscii" style="font-family:'Courier New',monospace; color:var(--lcd-bright); font-size:9px; line-height:0.9; text-align:center; margin:0; white-space:pre; text-shadow:0 0 6px rgba(157,255,107,0.4);"></pre>
+    <pre id="tunnelAscii" style="font-family:'Courier New',monospace; color:#ffffff; font-size:9px; line-height:0.9; text-align:center; margin:0; white-space:pre; text-shadow:0 0 6px rgba(157,255,107,0.4);"></pre>
   </div>
 
 </div>
@@ -964,168 +986,168 @@ footer{
 const SITE_DATA = {
 
   WORK: [
-    { role: "Engineer", org: "Musixmatch", period: "2025→now", note: 220,
-      desc: "Design and develop lyrics and audio analysis tools — Sentinel (copyright detection) and the Transcription API, from concept to product." },
-    { role: "Teaching Assistant", org: "Politecnico di Milano", period: "2024→2025", note: 210,
-      desc: "M.Sc. course \"Computer Music: Languages and Systems\" — SuperCollider, JUCE, algorithmic composition, live coding. Co-examiner Spring 2024 & 2025." },
-    { role: "Professor / Visiting Professor", org: "CPM Music Institute", period: "2022→2025", note: 200,
-      desc: "Fundamentals of Electronics for the AFAM Pro Audio Engineer degree, A.Y. 2022/23 through 2024/25." },
-    { role: "Research Intern", org: "Arianet s.r.l.", period: "2023→2024", note: 190,
-      desc: "Graph-based pollutant forecasting and sparse gas emission downscaling." },
-    { role: "PhD Candidate", org: "Politecnico di Milano — ISPL", period: "2021→2025", note: 180,
-      desc: "Image super-resolution, spatiotemporal forecasting, multimedia signal processing and audio forensics at the Image and Sound Processing Lab. Peer reviewer for signal processing conferences/journals; IT team member on the lab's computing infrastructure." },
-    { role: "Member & Coordinator", org: "analogpolimi", period: "2019→2025", note: 172,
-      desc: "Community-driven analog photography collective powered by PoliMi students — team member and workshop coordinator." },
-    { role: "Radio DJ", org: "Fritto FM", period: "2023→2024", note: 164,
-      desc: "Radio DJ and music selection curator." },
-    { role: "Disk Jockey", org: "INBEATWIN STUDIO", period: "2022→2023", note: 156,
-      desc: "DJ and music selection curator." },
-    { role: "Freelance Musician", org: "Freelance", period: "2013→now", note: 148,
-      desc: "Drummer for several bands, electronic music producer, cajon player, field recordings, live coding, deejaying." },
-    { role: "Radio DJ / Host", org: "RadioCULT", period: "2018→2019", note: 140,
-      desc: "Host and radio DJ of the program \"HZZØ\"; music selection curator." },
+    { role: "Engineer", org: "Musixmatch", period: "2025-now", note: 220,
+      desc: "Design and develop lyrics and audio analysis tools — Sentinel (copyright detection) and the Transcription API, from concept to product" },
+    { role: "Teaching Assistant", org: "Politecnico di Milano", period: "2024-2025", note: 210,
+      desc: "M.Sc. course \"Computer Music: Languages and Systems\" — SuperCollider, JUCE, algorithmic composition, live coding. Co-examiner Spring 2024 & 2025" },
+    { role: "Professor / Visiting Professor", org: "CPM Music Institute", period: "2022-2025", note: 200,
+      desc: "Fundamentals of Electronics for the AFAM Pro Audio Engineer degree, A.Y. 2022/23 through 2024/25" },
+    { role: "Research Intern", org: "Arianet s.r.l", period: "2023-2024", note: 190,
+      desc: "Graph-based pollutant forecasting and sparse gas emission downscaling" },
+    { role: "PhD Candidate", org: "Politecnico di Milano — ISPL", period: "2021-2025", note: 180,
+      desc: "Image super-resolution, spatiotemporal forecasting, multimedia signal processing and audio forensics at the Image and Sound Processing Lab. Peer reviewer for signal processing conferences/journals; IT team member on the lab's computing infrastructure" },
+    { role: "Member & Coordinator", org: "analogpolimi", period: "2019-2025", note: 172,
+      desc: "Community-driven analog photography collective powered by PoliMi students — team member and workshop coordinator" },
+    { role: "Radio DJ", org: "Fritto FM", period: "2023-2024", note: 164,
+      desc: "Radio DJ and music selection curator" },
+    { role: "Disk Jockey", org: "INBEATWIN STUDIO", period: "2022-2023", note: 156,
+      desc: "DJ and music selection curator" },
+    { role: "Freelance Musician", org: "Freelance", period: "2013-now", note: 148,
+      desc: "Drummer for several bands, electronic music producer, cajon player, field recordings, live coding, deejaying" },
+    { role: "Radio DJ / Host", org: "RadioCULT", period: "2018-2019", note: 140,
+      desc: "Host and radio DJ of the program \"HZZØ\"; music selection curator" },
     { role: "Radio DJ", org: "NSV Worldwide", period: "2017", note: 132,
-      desc: "Radio DJ and music selection curator." },
-    { role: "Event Coordinator", org: "Amegao", period: "2015→2018", note: 124,
-      desc: "Event coordination, audio technician, DJ." },
+      desc: "Radio DJ and music selection curator" },
+    { role: "Event Coordinator", org: "Amegao", period: "2015-2018", note: 124,
+      desc: "Event coordination, audio technician, DJ" },
   ],
 
   EDUCATION: [
-    { role: "Ph.D. in Information Technology", org: "Politecnico di Milano", period: "2021→2025", note: 150,
-      desc: "Telecommunications Area. Supervisor: Prof. Paolo Bestagini. Graph-based forecasting, image super-resolution, multimedia signal processing, audio forensics." },
-    { role: "M.Sc. in Music and Acoustic Engineering", org: "Politecnico di Milano", period: "2019→2021", note: 140,
-      desc: "Audio signal processing, audio/video coding, psychoacoustics, acoustics, electroacoustics, sound synthesis, spatial audio, machine and deep learning." },
-    { role: "B.Sc.Eng. in Electronics Engineering", org: "Università degli Studi di Perugia", period: "2014→2018", note: 130,
-      desc: "Signals and systems theory, probability and statistics, fundamentals of electronics, electromagnetic fields, radio-frequency engineering, computer architecture." },
-    { role: "High School Diploma", org: "ITCG Ruggero Bonghi", period: "2009→2014", note: 120,
-      desc: "Construction Management." },
+    { role: "Ph.D. in Information Technology", org: "Politecnico di Milano", period: "2021-2025", note: 150,
+      desc: "Telecommunications Area. Supervisor: Prof. Paolo Bestagini. Graph-based forecasting, image super-resolution, multimedia signal processing, audio forensics" },
+    { role: "M.Sc. in Music and Acoustic Engineering", org: "Politecnico di Milano", period: "2019-2021", note: 140,
+      desc: "Audio signal processing, audio/video coding, psychoacoustics, acoustics, electroacoustics, sound synthesis, spatial audio, machine and deep learning" },
+    { role: "B.Sc.Eng. in Electronics Engineering", org: "Università degli Studi di Perugia", period: "2014-2018", note: 130,
+      desc: "Signals and systems theory, probability and statistics, fundamentals of electronics, electromagnetic fields, radio-frequency engineering, computer architecture" },
+    { role: "High School Diploma", org: "ITCG Ruggero Bonghi", period: "2009-2014", note: 120,
+      desc: "Construction Management" },
   ],
 
   PUBLICATIONS: [
     { role: "Development of a Framework to Enhance BVOC Imaging", url: "https://hdl.handle.net/10589/237338",
-      org: "Ph.D. Thesis, Politecnico di Milano", period: "2025", note: 130, desc: "Giganti, A." },
+      org: "Ph.D. Thesis, Politecnico di Milano", period: "2025", note: 130, desc: "Giganti, A" },
     { role: "Leveraging Land Cover Priors for Isoprene Emission Super-Resolution", url: "https://doi.org/10.3390/rs17101715",
-      org: "MDPI Remote Sensing", period: "2025", note: 140, desc: "Ummerle, C., Giganti, A., Mandelli, S., et al." },
+      org: "MDPI Remote Sensing", period: "2025", note: 140, desc: "Ummerle, C., Giganti, A., Mandelli, S., et al" },
     { role: "Unveiling Nature's Secrets: Deep Learning for Enhanced Biogenic Emission Resolution", url: "https://doi.org/10.1016/j.sctalk.2025.100433",
-      org: "Elsevier — Science Talks", period: "2025", note: 150, desc: "Giganti, A." },
+      org: "Elsevier — Science Talks", period: "2025", note: 150, desc: "Giganti, A" },
     { role: "POLIPHONE: A Dataset for Smartphone Model Identification From Audio Recordings", url: "https://ieeexplore.ieee.org/document/10902157",
-      org: "IEEE Access", period: "2025", note: 160, desc: "Salvi, D., Leonzio D. U., Giganti, A., et al." },
+      org: "IEEE Access", period: "2025", note: 160, desc: "Salvi, D., Leonzio D. U., Giganti, A., et al" },
     { role: "Learn from Simulations, Adapt to Observations: Super-Resolution of Isoprene Emissions via Unpaired Domain-Adaptation", url: "https://doi.org/10.3390/rs16213963",
-      org: "MDPI Remote Sensing", period: "2024", note: 170, desc: "Giganti, A., Mandelli, S., Bestagini, P., Tubaro, S." },
+      org: "MDPI Remote Sensing", period: "2024", note: 170, desc: "Giganti, A., Mandelli, S., Bestagini, P., Tubaro, S" },
     { role: "Back to the Future: GNN-Based NO2 Forecasting Via Future Covariates", url: "https://ieeexplore.ieee.org/document/10642608",
-      org: "IEEE IGARSS 2024", period: "2024", note: 180, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al." },
+      org: "IEEE IGARSS 2024", period: "2024", note: 180, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al" },
     { role: "BREATHE — Boosting Resilience and Environmental Accuracy of Terrestrial BVOC Emissions Through AI-Enhanced High-Resolution Estimation", url: "https://doi.org/10.1016/j.sctalk.2024.100311",
-      org: "Elsevier — Science Talks", period: "2024", note: 190, desc: "Giganti, A." },
+      org: "Elsevier — Science Talks", period: "2024", note: 190, desc: "Giganti, A" },
     { role: "Super-Resolution of BVOC Emission Maps Via Domain Adaptation", url: "https://ieeexplore.ieee.org/document/10281779",
-      org: "IEEE IGARSS 2023", period: "2023", note: 200, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al." },
+      org: "IEEE IGARSS 2023", period: "2023", note: 200, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al" },
     { role: "Multi-BVOC Super-Resolution Exploiting Compounds Inter-Connection", url: "https://ieeexplore.ieee.org/document/10290089",
-      org: "EURASIP EUSIPCO 2023", period: "2023", note: 210, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al." },
+      org: "EURASIP EUSIPCO 2023", period: "2023", note: 210, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al" },
     { role: "Super-Resolution of BVOC Maps by Adapting Deep Learning Methods", url: "https://ieeexplore.ieee.org/document/10223169",
-      org: "IEEE ICIP 2023", period: "2023", note: 220, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al." },
+      org: "IEEE ICIP 2023", period: "2023", note: 220, desc: "Giganti, A., Mandelli, S., Bestagini, P., et al" },
     { role: "Speaker-Independent Microphone Identification in Noisy Conditions", url: "https://ieeexplore.ieee.org/document/9909800",
-      org: "EURASIP EUSIPCO 2022", period: "2022", note: 230, desc: "Giganti, A., Cuccovillo, L., Bestagini, P., et al." },
+      org: "EURASIP EUSIPCO 2022", period: "2022", note: 230, desc: "Giganti, A., Cuccovillo, L., Bestagini, P., et al" },
     { role: "Spectral Denoising for Microphone Classification", url: "https://dl.acm.org/doi/10.1145/3512732.3533586",
-      org: "ACM ICMR 2022", period: "2022", note: 240, desc: "Cuccovillo, L., Giganti, A., Bestagini, P., et al." },
+      org: "ACM ICMR 2022", period: "2022", note: 240, desc: "Cuccovillo, L., Giganti, A., Bestagini, P., et al" },
     { role: "From Words to Sound: Neural Audio Synthesis of Guitar Sounds with Timbral Descriptors", url: "https://zenodo.org/records/7088416",
       org: "AIMC 2022", period: "2022", note: 250, desc: "The Sound of AI (incl. Giganti, A.)" },
     { role: "Speaker-Independent Microphone Identification via Blind Channel Estimation in Noisy Conditions", url: "https://www.politesi.polimi.it/handle/10589/179420",
-      org: "M.Sc. Thesis, Politecnico di Milano", period: "2021", note: 260, desc: "Giganti, A." },
+      org: "M.Sc. Thesis, Politecnico di Milano", period: "2021", note: 260, desc: "Giganti, A" },
   ],
 
   AWARDS: [
     { role: "EURASIP EUSIPCO 3MT 2024 — Top 10 Finalist", org: "EURASIP", period: "Aug 2024", note: 300,
-      desc: "Selected as one of the 10 finalists of the \"3-Minute Thesis\" competition at EUSIPCO 2024, Lyon, France." },
+      desc: "Selected as one of the 10 finalists of the \"3-Minute Thesis\" competition at EUSIPCO 2024, Lyon, France" },
     { role: "IDEA Professional Development Microgrant — IGARSS 2024", org: "IEEE-GRSS", period: "Jul 2024", note: 290,
-      desc: "IEEE-GRSS Inspire, Develop, Empower, Advance Microgrant Program, supporting access to professional development and research opportunities." },
+      desc: "IEEE-GRSS Inspire, Develop, Empower, Advance Microgrant Program, supporting access to professional development and research opportunities" },
     { role: "IEEE M2GARSS 3MT 2024 — 1st Place", org: "IEEE-GRSS", period: "Apr 2024", note: 280,
-      desc: "1st place at the \"3-Minute Thesis\" competition of the M2GARSS 2024 conference, Oran, Algeria." },
+      desc: "1st place at the \"3-Minute Thesis\" competition of the M2GARSS 2024 conference, Oran, Algeria" },
     { role: "SAIE 2nd Photo Contest — Top 20 Finalist", org: "SAIE", period: "Sep 2023", note: 270,
-      desc: "Photo selected among the top 20 finalists — \"Il bello delle Infrastrutture – Ponti e Viadotti\", SAIE exhibition, Bari." },
+      desc: "Photo selected among the top 20 finalists — \"Il bello delle Infrastrutture – Ponti e Viadotti\", SAIE exhibition, Bari" },
     { role: "IEEE IGARSS 3MT 2023 — Top 10 Finalist", org: "IEEE-GRSS", period: "Jul 2023", note: 260,
-      desc: "Selected as one of the 10 finalists of the \"3-Minute Thesis\" competition at IGARSS 2023, Pasadena, CA, USA." },
+      desc: "Selected as one of the 10 finalists of the \"3-Minute Thesis\" competition at IGARSS 2023, Pasadena, CA, USA" },
     { role: "Scholarship AY 2019/20", org: "INPS", period: "Feb 2022", note: 250,
-      desc: "Financial aid for students enrolled in bachelor's/master's programs, awarded on academic merit." },
+      desc: "Financial aid for students enrolled in bachelor's/master's programs, awarded on academic merit" },
     { role: "Scholarship AY 2018/19", org: "INPS", period: "Mar 2021", note: 240,
-      desc: "Financial aid for students enrolled in bachelor's/master's programs, awarded on academic merit." },
+      desc: "Financial aid for students enrolled in bachelor's/master's programs, awarded on academic merit" },
   ],
 
   PROJECTS: {
 
     SOFTWARE: [
       { code: "SMPL_01", meta: "2022–25", title: "Super-Resolution of BVOC Emissions", note: 330,
-        desc: "Official repository of PhD research on super-resolution of biogenic emission maps via deep learning and domain adaptation.",
+        desc: "Official repository of PhD research on super-resolution of biogenic emission maps via deep learning and domain adaptation",
         tags: ["pytorch", "remote-sensing", "super-resolution"],
         linkText: "→ github.com/polimi-ispl/sr-bvoc", linkUrl: "https://github.com/polimi-ispl/sr-bvoc" },
       { code: "SMPL_02", meta: "2024", title: "MAGCRN", note: 392,
-        desc: "Spatiotemporal graph neural network framework to forecast NO2 concentration using future covariates.",
+        desc: "Spatiotemporal graph neural network framework to forecast NO2 concentration using future covariates",
         tags: ["gnn", "forecasting", "pytorch"],
         linkText: "→ github.com/polimi-ispl/MAGCRN", linkUrl: "https://github.com/polimi-ispl/MAGCRN" },
       { code: "SMPL_03", meta: "2020–21", title: "co²des", note: 440,
-        desc: "Environment for enhanced live coding performances — an interactive installation where the audience shapes the sound through a web app.",
+        desc: "Environment for enhanced live coding performances — an interactive installation where the audience shapes the sound through a web app",
         tags: ["live-coding", "webapp"],
         linkText: "→ github.com/antonelse/co2des", linkUrl: "https://github.com/antonelse/co2des" },
       { code: "SMPL_04", meta: "2020", title: "toneZ", note: 410,
-        desc: "Browser-based tonnetz diagram viewer for visualizing harmonic relationships in music.",
+        desc: "Browser-based tonnetz diagram viewer for visualizing harmonic relationships in music",
         tags: ["p5.js", "tone.js"],
         linkText: "→ github.com/LoreTalone/toneZ", linkUrl: "https://github.com/LoreTalone/toneZ/blob/master/README.md" },
     ],
 
     AUDIO: [
       { code: "AUD_01", meta: "2019–20", title: "Spectral Environment Album Series", note: 220,
-        desc: "Three volumes of ambient audio textures — 20-minute pieces obtained through modular synthesis and time-spectral techniques, using only open-source tools.",
+        desc: "Three volumes of ambient audio textures — 20-minute pieces obtained through modular synthesis and time-spectral techniques, using only open-source tools",
         tags: ["modular-synthesis", "ambient"],
         linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/spectral-environment-iii" },
       { code: "AUD_02", meta: "2026", title: "live from giardino", note: 210,
-        desc: "Live album recorded with AnDrone.io, the DIY drone synthesizer built on the Axoloti/Ksoloti DSP board.",
+        desc: "Live album recorded with AnDrone.io, the DIY drone synthesizer built on the Axoloti/Ksoloti DSP board",
         tags: ["androne.io", "live", "drone-synth"],
         linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/live-from-giardino" },
       { code: "AUD_03", meta: "2022", title: "PARADISO", note: 200,
-        desc: "An event about the perception of place stretched over time, in continuous transformation — same event recurring a year apart, always in symbiosis with the Villa Cappuccini garden.",
+        desc: "An event about the perception of place stretched over time, in continuous transformation — same event recurring a year apart, always in symbiosis with the Villa Cappuccini garden",
         tags: ["site-specific", "performance"],
         linkText: "→ Giardino Villa Cappuccini on Instagram", linkUrl: "https://www.instagram.com/giardinovillacappuccini/" },
     ],
 
     MIXES: [
       { code: "MIX_01", meta: "2020", title: "COVID-19 Mixtape", note: 180,
-        desc: "A series of live-streamed DJ sessions from home, bringing together a community of friends who shared a deep connection with music during lockdown isolation.",
+        desc: "A series of live-streamed DJ sessions from home, bringing together a community of friends who shared a deep connection with music during lockdown isolation",
         tags: ["live-stream", "dj-set"],
         linkText: "→ listen on Mixcloud", linkUrl: "https://www.mixcloud.com/antonelse/covid-19-mixtape-3/?play=fb" },
     ],
 
     VIDEO: [
       { code: "VID_01", meta: "2022", title: "Circostanziatamente", note: 260,
-        desc: "A short film from Rainwave Studio, presented at the FiascaParty 2022 in Oppido Lucano, PZ, Italy.",
+        desc: "A short film from Rainwave Studio, presented at the FiascaParty 2022 in Oppido Lucano, PZ, Italy",
         tags: ["short-film"],
         linkText: "→ watch on YouTube", linkUrl: "https://youtu.be/lJuZkTODGLM" },
       { code: "VID_02", meta: "2022", title: "Eating The Sun", note: 240,
-        desc: "Soundtrack for \"Eating The Sun\", an installation by Cristiano Corbucci presented in Assisi for the Fondo Ambiente Italiano (FAI) Days.",
+        desc: "Soundtrack for \"Eating The Sun\", an installation by Cristiano Corbucci presented in Assisi for the Fondo Ambiente Italiano (FAI) Days",
         tags: ["soundtrack", "installation"],
         linkText: "→ watch on Vimeo", linkUrl: "https://vimeo.com/707512578" },
       { code: "VID_03", meta: "2022", title: "Along The Border", note: 220,
-        desc: "Soundtrack for \"Along The Border\", a mini-documentary showing the exodus of Ukrainian refugees along the border.",
+        desc: "Soundtrack for \"Along The Border\", a mini-documentary showing the exodus of Ukrainian refugees along the border",
         tags: ["soundtrack", "documentary"],
         linkText: "→ watch on YouTube", linkUrl: "https://www.youtube.com/watch?v=xO2QTLNfX4M" },
       { code: "VID_04", meta: "2022", title: "METRO", note: 200,
-        desc: "Soundtrack and technical assistant for \"METRO\", a short footage selected at UFFA! (Urbino Festival di Film Amatoriali) 2022.",
+        desc: "Soundtrack and technical assistant for \"METRO\", a short footage selected at UFFA! (Urbino Festival di Film Amatoriali) 2022",
         tags: ["soundtrack", "short-film"],
         linkText: "→ link coming soon", linkUrl: "#" },
       { code: "VID_05", meta: "2021", title: "Ozne Production — Audio Assistant", note: 180,
-        desc: "Audio and technical assistant for Ozne Production.",
+        desc: "Audio and technical assistant for Ozne Production",
         tags: ["audio-post"],
         linkText: "→ link coming soon", linkUrl: "#" },
     ],
 
     DIY: [
       { code: "DIY_01", meta: "2026", title: "AnDrone.io", note: 300,
-        desc: "A DIY drone synthesizer based on the Axoloti (now Ksoloti) DSP board — MIDI mappings, patches and build guide.",
+        desc: "A DIY drone synthesizer based on the Axoloti (now Ksoloti) DSP board — MIDI mappings, patches and build guide",
         tags: ["dsp", "midi", "hardware"],
         linkText: "→ github.com/antonelse/MIDI-mappings-ae", linkUrl: "https://github.com/antonelse/MIDI-mappings-ae/blob/main/axoloti_drone-evolution_uc33e/GUIDE.md" },
       { code: "DIY_02", meta: "2021", title: "MD-SPSI-MKII-ae",
-        desc: "A bunch of drum/synth kits made for the Elektron MachineDrum SPSI MKII, updated periodically.",
+        desc: "A bunch of drum/synth kits made for the Elektron MachineDrum SPSI MKII, updated periodically",
         tags: ["elektron", "sound-design"],
         linkText: "→ github.com/antonelse/MD-SPSI-MKII-ae", linkUrl: "https://github.com/antonelse/MD-SPSI-MKII-ae" },
       { code: "DIY_03", meta: "2021", title: "Analog Shutterino",
-        desc: "Shutter trigger for analog cameras — linear actuator and ultrasonic sensor on Arduino, used as a nighttime phototrap.",
+        desc: "Shutter trigger for analog cameras — linear actuator and ultrasonic sensor on Arduino, used as a nighttime phototrap",
         tags: ["arduino", "analog-photography"],
         linkText: "→ link coming soon", linkUrl: "#" },
     ],
@@ -1135,28 +1157,28 @@ const SITE_DATA = {
 
     WATCHING: [
       { code: "ARCHIVE", meta: "Instagram", title: "___d.kun",
-        desc: "A container of cover art from the records I've listened to over the years.",
+        desc: "A container of cover art from the records I've listened to over the years",
         linkText: "→ view on Instagram", linkUrl: "https://www.instagram.com/___d.kun/" },
       { code: "PLAYLIST", meta: "YouTube", title: "Liked Videos",
-        desc: "A running, unfiltered archive of everything I've liked on YouTube.",
+        desc: "A running, unfiltered archive of everything I've liked on YouTube",
         linkText: "→ view playlist on YouTube", linkUrl: "https://www.youtube.com/playlist?list=LL" },
     ],
 
     LISTENING: [
       { code: "MIXES", meta: "SoundCloud", title: "thefavela",
-        desc: "Mixes I keep coming back to — the ones shaping what I listen to right now.",
+        desc: "Mixes I keep coming back to — the ones shaping what I listen to right now",
         linkText: "→ listen on SoundCloud", linkUrl: "https://soundcloud.com/thefavela" },
       { code: "COLLECTION", meta: "Bandcamp", title: "Bandcamp Collection",
-        desc: "Albums I've bought — a running log of what I'm actually listening to.",
+        desc: "Albums I've bought — a running log of what I'm actually listening to",
         linkText: "→ view collection on Bandcamp", linkUrl: "https://bandcamp.com/antonelse" },
     ],
 
     WISHING: [
       { code: "WISH", meta: "Bandcamp", title: "Bandcamp Wishlist",
-        desc: "Records I've been meaning to pick up — updated whenever something new catches my ear.",
+        desc: "Records I've been meaning to pick up — updated whenever something new catches my ear",
         linkText: "→ view wishlist on Bandcamp", linkUrl: "https://bandcamp.com/antonelse/wishlist" },
       { code: "WANT", meta: "Discogs", title: "Discogs Wantlist",
-        desc: "Vinyl I'm hunting for — mostly electronic, drum & bass and modular-adjacent stuff.",
+        desc: "Vinyl I'm hunting for — mostly electronic, drum & bass and modular-adjacent stuff",
         linkText: "→ view wantlist on Discogs", linkUrl: "https://www.discogs.com/mywantlist" },
     ],
   },
@@ -1665,7 +1687,7 @@ const SITE_DATA = {
     logoEl.textContent = ASCII_LOGO;
 
     const typingEl = document.getElementById('exitTyping');
-    const TYPING_TEXT = "Thank you for your attention, bye.\nAphex Twin - Ziggomatic 17";
+    const TYPING_TEXT = "Thank you for your attention, bye\nAphex Twin - Ziggomatic 17";
     let typingTimer = null;
 
     function humanizedType(el, text, onDone){
@@ -1712,7 +1734,8 @@ const SITE_DATA = {
     if(el && document.lastModified){
       const d = new Date(document.lastModified);
       if(!isNaN(d.getTime())){
-        el.textContent = d.toISOString().slice(0,10);
+        const pad = n => String(n).padStart(2, '0');
+        el.textContent = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
       }
     }
   })();
@@ -1731,6 +1754,26 @@ const SITE_DATA = {
         head.parentElement.classList.toggle('collapsed');
       });
     });
+
+    const collapseAllBtn = document.getElementById('collapseAllBtn');
+    if(collapseAllBtn){
+      let allCollapsed = false;
+      collapseAllBtn.addEventListener('click', ()=>{
+        allCollapsed = !allCollapsed;
+        document.querySelectorAll('.phrase').forEach(el => el.classList.toggle('collapsed', allCollapsed));
+        document.querySelectorAll('.contact').forEach(el => el.classList.toggle('collapsed', allCollapsed));
+        collapseAllBtn.classList.toggle('is-active', allCollapsed);
+        collapseAllBtn.setAttribute('aria-pressed', String(allCollapsed));
+        collapseAllBtn.title = allCollapsed ? 'Expand all sections' : 'Collapse all sections';
+        collapseAllBtn.querySelector('.collapse-icon').textContent = allCollapsed ? '⌄⌃' : '⌃⌄';
+      });
+      collapseAllBtn.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          collapseAllBtn.click();
+        }
+      });
+    }
   })();
 
 })();
