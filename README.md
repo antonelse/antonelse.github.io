@@ -62,7 +62,8 @@ Field reference:
 - `tags` is optional — omit it (or use `[]`) for a card with no tag chips.
 - `note` is optional and purely sonic: it's the synth pitch played when you
   hover that row/card (only audible if SOUND is on). Any number works, or
-  omit it entirely for a silent row.
+  omit it entirely for a silent row (e.g. `DIY_02` and `DIY_03` currently have
+  no `note`).
 - `desc` accepts a `\"` inside the string as `\"like this\"` (escaped with a
   backslash) since it's inside a JS string, not raw HTML.
 
@@ -77,6 +78,8 @@ real, populated data. What's intentionally left for you to add:
   right below it in `index.html` showing the exact markup to copy.
 - **`/PROJECTS` → DIY → Analog Shutterino**: the "build log / github" link is still `#`
   (no public repo linked yet) — update `linkUrl` for that entry in `SITE_DATA.PROJECTS.DIY`.
+  Same goes for two `VIDEO` entries (`METRO`, `Ozne Production — Audio Assistant`),
+  which also still have `linkUrl: "#"`.
 - **`imgs/`**: currently empty — drop any image files here that you reference
   from PROJECTS → IMAGES above (relative paths like `imgs/photo.jpg`).
 - **`/INFLUENCES` → READING**: still empty; unlike WATCHING/LISTENING/WISHING it
@@ -91,7 +94,12 @@ projects) — update the corresponding `SITE_DATA` array whenever they do.
 
 ## 5. Good to know about the page itself
 
-- Sections **PUBLICATIONS** and **AWARDS** start collapsed — click the header to expand.
+- The **navmenu** (ABOUT, LISSAJOUS, WORK, EDUCATION, PROJECTS, PUBLICATIONS,
+  AWARDS, INFLUENCES, CONTACT) jumps to each section and highlights the one
+  currently in view as you scroll.
+- Sections **PUBLICATIONS** and **AWARDS** start collapsed — click the header to
+  expand, or use **⌃⌄ ALL** in the top bar to collapse/expand every collapsible
+  section at once.
 - Hovering the avatar switches it from a low-res B&W pixelated version to the full
   color photo.
 - After ~60s of inactivity an animated ASCII tunnel screensaver kicks in; any input
@@ -101,7 +109,9 @@ projects) — update the corresponding `SITE_DATA` array whenever they do.
   FM/IDM-style blips; the small bars next to MUTE are a real VU meter reading the
   actual audio level (not decorative); **BPM −/+** changes playhead speed;
   **LIGHT/DARK** switches the color theme; **CRT** toggles the scanline/vignette
-  effect. All are keyboard-accessible (Tab + Enter/Space).
+  effect; **⌃⌄ ALL** collapses/expands every section (see above). The blinking
+  **REC ■** indicator next to it is purely decorative — not a real recording
+  state. All controls are keyboard-accessible (Tab + Enter/Space).
 - "SAVE & EXIT" in the footer is an easter egg (ASCII logo + typed message), not a
   real navigation action.
 - The footer's "last modified" date is automatic (`document.lastModified`) — no
