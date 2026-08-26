@@ -66,28 +66,28 @@ Field reference:
 - `desc` accepts a `\"` inside the string as `\"like this\"` (escaped with a
   backslash) since it's inside a JS string, not raw HTML.
 
-## 4. What's still a placeholder — finish these before/after going live
+## 4. What's still a placeholder — the site is live, these are the only loose ends
 
-The content (WORK, EDUCATION, PROJECTS, PUBLICATIONS, AWARDS, contacts) is already
-filled in with real data. What's intentionally left for you to add:
+Everything else (WORK, EDUCATION, PROJECTS, PUBLICATIONS, AWARDS, contacts) is
+real, populated data. What's intentionally left for you to add:
 
-- **`/PROJECTS` → VIDEO**: one placeholder card. To show a preview, add a `src`
-  attribute to the `<video>` tag — either a local file (`imgs/myvideo.mp4`) or a
-  direct video URL. For platforms that can't be embedded as `<video>` (YouTube,
-  Vimeo…), use the link line instead.
-- **`/PROJECTS` → IMAGES**: one placeholder cell. To show a photo, add a `src`
-  attribute to the `<img>` tag — local file (`imgs/photo.jpg`) or direct image URL —
-  then delete the `.img-ph` placeholder `<div>` right below it.
+- **`/PROJECTS` → IMAGES**: still a static "— COMING SOON —" placeholder (this
+  subsection isn't part of `SITE_DATA` — it's plain HTML). To show a photo,
+  replace that line with an `.img-cell` block — there's a commented example
+  right below it in `index.html` showing the exact markup to copy.
 - **`/PROJECTS` → DIY → Analog Shutterino**: the "build log / github" link is still `#`
-  (no public repo linked yet).
-- **`imgs/`**: currently empty — drop any image/video files here that you reference
-  from the IMAGES/VIDEO sections above (relative paths like `imgs/photo.jpg`).
-- **`/INFLUENCES` → READING**: still empty; add cards the same way the WATCHING and
-  LISTENING ones are built (copy a `.sample` block).
+  (no public repo linked yet) — update `linkUrl` for that entry in `SITE_DATA.PROJECTS.DIY`.
+- **`imgs/`**: currently empty — drop any image files here that you reference
+  from PROJECTS → IMAGES above (relative paths like `imgs/photo.jpg`).
+- **`/INFLUENCES` → READING**: still empty; unlike WATCHING/LISTENING/WISHING it
+  hasn't been moved into `SITE_DATA` yet since there's nothing to show — once you
+  have entries, add a `READING: [...]` array under `SITE_DATA.INFLUENCES` (same
+  shape as `WATCHING`), give its `.samples` div an `id="infReadingSamples"`, and
+  call `renderSampleCards('infReadingSamples', SITE_DATA.INFLUENCES.READING)`
+  next to the other `renderSampleCards(...)` calls.
 
-Everything else (WORK, EDUCATION, PROJECTS/SOFTWARE, PUBLICATIONS, AWARDS, contact
-links, social embeds) is already populated — just double-check it still reflects you
-before publishing, and update it as things change (new job, new papers, etc.).
+Keep an eye on all of the above as things change (new job, new papers, new
+projects) — update the corresponding `SITE_DATA` array whenever they do.
 
 ## 5. Good to know about the page itself
 
@@ -115,4 +115,4 @@ before publishing, and update it as things change (new job, new papers, etc.).
 | `og-image.png` | Social preview image shown when the link is shared (LinkedIn, Twitter, Slack, etc.) |
 | `robots.txt` | Tells search engines they're allowed to index the site |
 | `sitemap.xml` | Helps search engines find the page — update the URL if you use a custom domain |
-| `imgs/` | Drop images/videos here to reference from PROJECTS → IMAGES / VIDEO |
+| `imgs/` | Drop images here to reference from PROJECTS → IMAGES |
