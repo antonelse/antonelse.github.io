@@ -6,13 +6,13 @@
 
 <!-- SEO -->
 <title>Antonio Giganti — AI &amp; Audio Engineer</title>
-<meta name="description" content="Antonio Giganti — AI &amp; Audio Engineer at Musixmatch, working at the intersection of machine learning, audio and lyrics technology. Portfolio, research, music and DIY builds, presented as an interactive tracker-style page">
+<meta name="description" content="Antonio Giganti — AI &amp; Audio Engineer working at the intersection of machine learning, audio and lyrics technology. Portfolio, research, music and DIY builds, presented as an interactive tracker-style page">
 <link rel="canonical" href="https://antonelse.github.io/">
 
 <!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Antonio Giganti — AI &amp; Audio Engineer">
-<meta property="og:description" content="AI &amp; Audio Engineer at Musixmatch — machine learning, audio and lyrics technology, PhD research, and music-tech side projects. Interactive tracker-style portfolio">
+<meta property="og:description" content="AI &amp; Audio Engineer — machine learning, audio and lyrics technology, PhD research, and music-tech side projects. Interactive tracker-style portfolio">
 <meta property="og:url" content="https://antonelse.github.io/">
 <meta property="og:image" content="https://antonelse.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 <!-- Twitter card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Antonio Giganti — AI &amp; Audio Engineer">
-<meta name="twitter:description" content="AI &amp; Audio Engineer at Musixmatch — machine learning, audio and lyrics technology">
+<meta name="twitter:description" content="AI &amp; Audio Engineer — machine learning, audio and lyrics technology">
 <meta name="twitter:image" content="https://antonelse.github.io/og-image.png">
 
 <!-- Favicon (pixel-art Æ) -->
@@ -66,7 +66,7 @@ body.theme-light{
   --lcd-bright: #000000;
   --amber: #000000;
   --grid: rgba(0,0,0,0.06);
-  --bc-filter: invert(1) hue-rotate(180deg);
+  --bc-filter: none;
   --topbar-text: #ffffff;
 }
 
@@ -87,18 +87,25 @@ html,body{
   overflow-x:hidden;
 }
 
-/* CRT scanlines + vignette */
+/* CRT scanlines + pixel mask + vignette */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:50;
+  z-index:150;
   background:
     repeating-linear-gradient(
       0deg,
       rgba(0,0,0,0.15) 0px,
       rgba(0,0,0,0.15) 1px,
+      transparent 2px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,0.06) 0px,
+      rgba(0,0,0,0.06) 1px,
       transparent 2px,
       transparent 3px
     );
@@ -109,7 +116,7 @@ body::after{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:51;
+  z-index:151;
   background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);
 }
 
@@ -564,7 +571,7 @@ body::after{
 }
 .bc-grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
   align-items: start;
   margin-bottom: 12px;
@@ -586,6 +593,10 @@ body::after{
 .bc-frame iframe{
   border-radius: 4px;
   display:block;
+}
+.bc-grid .bc-frame iframe{
+  max-width: 400px;
+  margin: 0 auto;
 }
 .tag{
   font-family: var(--font-display);
@@ -683,7 +694,7 @@ footer{
     <span class="topbar-controls">
       <span class="tb-group">
         <span id="playBtn" class="tb-btn" role="button" tabindex="0" aria-pressed="false" title="Play/stop the note sequence">▶ PLAY</span>
-        <span id="muteBtn" class="tb-btn" role="button" tabindex="0" aria-pressed="false" title="Toggle sound on/off">🔇 MUTE</span>
+        <span id="muteBtn" class="tb-btn" role="button" tabindex="0" aria-pressed="false" title="Toggle sound on/off">✕ MUTE</span>
         <span id="vuMeter" class="vu-meter" title="Audio level" aria-hidden="true">
           <span class="vu-seg"></span><span class="vu-seg"></span><span class="vu-seg"></span><span class="vu-seg"></span><span class="vu-seg"></span><span class="vu-seg"></span>
         </span>
@@ -700,11 +711,11 @@ footer{
         <span id="crtBtn" class="tb-btn is-active" role="button" tabindex="0" aria-pressed="true" title="Toggle CRT scanline effect">▦ CRT</span>
       </span>
       <span class="tb-sep">│</span>
-      <span class="tb-rec">REC <span class="blink">■</span></span>
-      <span class="tb-sep tb-right">│</span>
       <span id="collapseAllBtn" class="tb-btn tb-collapse" role="button" tabindex="0" aria-pressed="false" title="Collapse/expand all sections">
         <span class="collapse-icon">⌃⌄</span> ALL
       </span>
+      <span class="tb-sep tb-right">│</span>
+      <span class="tb-rec">REC <span class="blink">■</span></span>
     </span>
   </div>
 
@@ -727,7 +738,7 @@ footer{
     <div style="flex:1; min-width:200px;">
       <div class="rowlabel">TRACK 01 // ABOUT</div>
       <div class="title-big" id="titleBig" contenteditable="true" spellcheck="false" autocorrect="off" autocapitalize="off"><span id="titleBigText"></span><span class="cursor-block"></span></div>
-      <div class="subtitle">AI &amp; Audio Engineer @ Musixmatch · Milan/Bologna, IT</div>
+      <div class="subtitle">AI &amp; Audio Engineer · Milan, Italy</div>
     </div>
   </div>
 
@@ -801,7 +812,7 @@ footer{
     <!-- AUDIO subsection: album + mixes -->
     <div class="subsection-head" id="sec-audio">AUDIO</div>
     <div class="bc-frame">
-      <div class="bc-label">🎵 BANDCAMP — DISCOGRAPHY</div>
+      <div class="bc-label">♪ BANDCAMP — DISCOGRAPHY</div>
       <iframe title="Bandcamp player — sequenze" allow="autoplay; encrypted-media; fullscreen" style="border:0; width:100%; max-width:350px; height:165px; filter: var(--bc-filter, none); margin:0 auto;"
         src="https://bandcamp.com/EmbeddedPlayer/album=3225209048/size=large/bgcol=141414/linkcol=ffffff/tracklist=false/artwork=small/"></iframe>
       <div style="margin-top:10px; font-size:11px;">
@@ -814,7 +825,7 @@ footer{
     <div class="subsection-head" id="sec-mixes">MIXES</div>
     <div class="bc-grid">
     <div class="bc-frame">
-      <div class="bc-label">🎧 HEARTHIS.AT</div>
+      <div class="bc-label">♪ HEARTHIS.AT</div>
       <iframe title="hearthis.at player" allow="autoplay; encrypted-media; fullscreen" style="border:0; width:100%; height:170px; filter: var(--bc-filter, none);"
         src="https://hearthis.at/antonelse/embed/?hcolor=&color=&style=2&sub_domain=hearthis.at&auto_play=0&background=141414"></iframe>
       <div style="margin-top:10px; font-size:11px;">
@@ -822,7 +833,7 @@ footer{
       </div>
     </div>
     <div class="bc-frame">
-      <div class="bc-label">🎧 MIXCLOUD</div>
+      <div class="bc-label">♪ MIXCLOUD</div>
       <iframe title="Mixcloud player" allow="autoplay; encrypted-media; fullscreen" style="border:0; width:100%; height:180px; filter: var(--bc-filter, none);"
         src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=%2Fantonelse%2F"></iframe>
       <div style="margin-top:10px; font-size:11px;">
@@ -830,7 +841,7 @@ footer{
       </div>
     </div>
     <div class="bc-frame">
-      <div class="bc-label">🎧 SOUNDCLOUD</div>
+      <div class="bc-label">♪ SOUNDCLOUD</div>
       <iframe title="SoundCloud player — mixes by antonelse" allow="autoplay; encrypted-media; fullscreen" style="border:0; width:100%; height:300px; filter: var(--bc-filter, none);"
         src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/antonelse/sets/mixes&color=%23ffffff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false"></iframe>
       <div style="margin-top:10px; font-size:11px;">
@@ -1390,7 +1401,7 @@ const SITE_DATA = {
   const muteBtn = document.getElementById('muteBtn');
   muteBtn.addEventListener('click', ()=>{
     muted = !muted;
-    muteBtn.textContent = muted ? '🔇 MUTE' : '🔊 SOUND';
+    muteBtn.textContent = muted ? '✕ MUTE' : '♪ SOUND';
     muteBtn.classList.toggle('is-active', !muted);
     muteBtn.setAttribute('aria-pressed', String(!muted));
     if(!muted) ctx(); // unlock audio context on user gesture
@@ -1643,14 +1654,14 @@ const SITE_DATA = {
 
     if('IntersectionObserver' in window){
       const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          const link = links.find(a => a.dataset.target === entry.target.id);
-          if(!link) return;
-          if(entry.isIntersecting){
-            links.forEach(a=>a.classList.remove('active'));
-            link.classList.add('active');
-          }
-        });
+        const visible = entries.filter(e => e.isIntersecting);
+        if(visible.length === 0) return;
+        visible.sort((a,b)=> a.boundingClientRect.top - b.boundingClientRect.top);
+        const link = links.find(a => a.dataset.target === visible[0].target.id);
+        if(link){
+          links.forEach(a=>a.classList.remove('active'));
+          link.classList.add('active');
+        }
       }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
 
       sections.forEach(s => observer.observe(s));
