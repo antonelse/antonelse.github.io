@@ -33,6 +33,8 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 
 - Add/edit/remove an entry → add/edit/remove its object in the array.
 - Reorder → reorder the objects (STEP numbers 00, 01, 02… are automatic).
+  `WORK` is currently ordered by start year, most recent first — keep new
+  entries in that order (ties broken by whichever ended later).
 
 | Section | Fields |
 |---|---|
@@ -58,8 +60,22 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 
 ## Page behavior, good to know
 
-- **Navmenu** highlights the section in view as you scroll; PUBLICATIONS and
-  AWARDS start collapsed (click header, or **⌃⌄ ALL** to toggle everything).
+- **Navmenu**: all sections start collapsed; the active link tracks a fixed
+  reference line near the top of the viewport as you scroll (not a plain
+  visibility check, so it stays correct even when sections have very
+  different heights). On wide screens (≥1320px) it becomes a sidebar fixed
+  to the left of the content, with PUBLICATIONS/INFLUENCES shown as
+  PUBS/INFL to fit — section headers stay full-length everywhere.
+- **⌃⌄ ALL** expands every section on the first click, collapses on the
+  second (click a section header to toggle just that one).
+- **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
+  ratio; phase drifts slowly on its own for extra shape variety. Link to a
+  short explainer sits under the canvas.
+- **Custom cursor**: on desktop (mouse + hover), the native pointer is
+  hidden everywhere and replaced with a small 8-bit triangle that follows
+  the mouse, spins slowly in fake-3D and bobs; it renders under the CRT
+  overlay so it's affected by the scanlines/vignette like the rest of the
+  page. Off on touch devices, where the native pointer is untouched.
 - Avatar: hover switches low-res B&W → full color.
 - After ~60s idle, an ASCII tunnel screensaver kicks in; any input dismisses it.
 - Top bar: **PLAY** runs a demo playhead over WORK rows · **MUTE/SOUND**
@@ -70,7 +86,9 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - Footer **"SAVE & EXIT"** is an easter egg (ASCII logo + typed message).
 - Title ("ANTONIO GIGANTI") is `contenteditable` and self-heals: edit or
   clear it, wait 1.8s after you stop, it retypes the real name (rebuilds
-  stripped `<span>`s if needed).
+  stripped `<span>`s if needed). Native caret is hidden here (iOS renders it
+  oversized with the custom pixel font) — the blinking block next to the
+  text is the real cursor indicator.
 - Footer "last modified" date is automatic (`document.lastModified`).
 
 ## Files

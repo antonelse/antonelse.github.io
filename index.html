@@ -138,7 +138,6 @@ body::after{
   font-size: 13px;
   font-weight:bold;
   letter-spacing:2px;
-  box-shadow: 0 0 12px rgba(157,255,107,0.5);
   flex-wrap: wrap;
   row-gap: 6px;
 }
@@ -269,6 +268,29 @@ body::after{
 .navmenu a.active::before{
   opacity: 0;
 }
+
+/* ===== SIDEBAR NAV (wide viewports only) ===== */
+@media (min-width: 1320px){
+  .navmenu{
+    position: fixed;
+    top: 110px;
+    /* anchor to the .screen container's left edge (max-width:980px, centered)
+       instead of a fixed viewport offset, so it stays attached to the
+       content regardless of browser zoom / viewport width */
+    left: calc(50vw - 490px - 20px - 140px);
+    width: 140px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 0;
+  }
+  .navmenu a{
+    white-space: nowrap;
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+}
 .tb-collapse{
   font-size: 10px;
   letter-spacing: 0.5px;
@@ -311,7 +333,12 @@ body::after{
   margin: 6px 0 4px;
   color: var(--lcd-bright);
   outline: none;
-  caret-color: var(--lcd-bright);
+  /* native caret hidden on purpose: with the custom pixel font, iOS Safari
+     renders it as an oversized vertical bar spanning way past the line
+     height (Android/desktop render it fine). We already draw our own
+     blinking .cursor-block below, so just suppress the native one
+     everywhere for a consistent look across platforms. */
+  caret-color: transparent;
   cursor: text;
   text-shadow: 0 0 8px rgba(157,255,107,0.6);
 }
@@ -330,6 +357,54 @@ body::after{
   vertical-align:middle;
   animation: blink 0.9s steps(1) infinite;
   margin-left:4px;
+}
+
+/* ===== 8-BIT CUSTOM CURSOR ===== */
+/* hidden by default (mobile/touch); only shown+positioned for real mice below */
+#cursor8bit{ display:none; }
+@media (hover:hover) and (pointer:fine){
+  html, body, *{
+    cursor:none !important;
+  }
+  #cursor8bit{
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    pointer-events: none;
+    z-index: 145;
+    transform: translate3d(-100px,-100px,0);
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  #cursor8bit.is-active{ opacity: 1; }
+  #cursor8bit .c8-bob{
+    animation: c8bob 1.1s ease-in-out infinite;
+  }
+  #cursor8bit .c8-spin{
+    perspective: 220px;
+  }
+  #cursor8bit .c8-spin svg{
+    display:block;
+    width: 15px;
+    height: 15px;
+    /* the mouse position is the div's (0,0) origin; shift the svg so its
+       downward tip (bottom-center of the triangle) lands there instead
+       of the box's top-left corner */
+    margin-left: -7.5px;
+    margin-top: -15px;
+    animation: c8spin 2.6s linear infinite;
+    transform-style: preserve-3d;
+  }
+}
+@keyframes c8bob{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(-3px); }
+}
+@keyframes c8spin{
+  0%{ transform: rotateY(0deg); }
+  100%{ transform: rotateY(360deg); }
 }
 
 /* ===== SONG STATS BAR (mimics tracker top status: BPM, playback pos etc) ===== */
@@ -688,6 +763,34 @@ footer{
 </style>
 </head>
 <body>
+<div id="cursor8bit" aria-hidden="true">
+  <div class="c8-bob">
+    <div class="c8-spin">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+        <!-- shadow layer, offset for a chunky extruded/3D feel -->
+        <g transform="translate(2,2)" opacity="0.4" fill="var(--bg2)">
+          <rect x="0" y="0"  width="16" height="2"/>
+          <rect x="0" y="2"  width="16" height="2"/>
+          <rect x="2" y="4"  width="12" height="2"/>
+          <rect x="2" y="6"  width="12" height="2"/>
+          <rect x="4" y="8"  width="8"  height="2"/>
+          <rect x="4" y="10" width="8"  height="2"/>
+          <rect x="6" y="12" width="4"  height="2"/>
+          <rect x="6" y="14" width="4"  height="2"/>
+        </g>
+        <!-- main triangle, isosceles, pointing down -->
+        <rect x="0" y="0"  width="16" height="2" fill="var(--lcd-bright)"/>
+        <rect x="0" y="2"  width="16" height="2" fill="var(--lcd-bright)"/>
+        <rect x="2" y="4"  width="12" height="2" fill="var(--lcd)"/>
+        <rect x="2" y="6"  width="12" height="2" fill="var(--lcd)"/>
+        <rect x="4" y="8"  width="8"  height="2" fill="var(--lcd)"/>
+        <rect x="4" y="10" width="8"  height="2" fill="var(--lcd-dim)"/>
+        <rect x="6" y="12" width="4"  height="2" fill="var(--lcd-dim)"/>
+        <rect x="6" y="14" width="4"  height="2" fill="var(--lcd-dim)"/>
+      </svg>
+    </div>
+  </div>
+</div>
 <div class="screen">
 
   <div class="topbar">
@@ -721,13 +824,13 @@ footer{
 
   <nav class="navmenu" id="navmenu">
     <a href="#sec-about" data-target="sec-about" class="active">ABOUT</a>
-    <a href="#sec-lissajous" data-target="sec-lissajous">LISSAJOUS</a>
+    <a href="#sec-lissajous" data-target="sec-lissajous">LJ</a>
     <a href="#sec-work" data-target="sec-work">WORK</a>
     <a href="#sec-education" data-target="sec-education">EDUCATION</a>
     <a href="#sec-projects" data-target="sec-projects">PROJECTS</a>
-    <a href="#sec-publications" data-target="sec-publications">PUBLICATIONS</a>
+    <a href="#sec-publications" data-target="sec-publications">PUBS</a>
     <a href="#sec-awards" data-target="sec-awards">AWARDS</a>
-    <a href="#sec-influences" data-target="sec-influences">INFLUENCES</a>
+    <a href="#sec-influences" data-target="sec-influences">INFL</a>
     <a href="#sec-contact" data-target="sec-contact">CONTACT</a>
   </nav>
 
@@ -750,13 +853,16 @@ footer{
   </div>
 
   <!-- LISSAJOUS VISUALIZER -->
-  <div class="phrase" id="sec-lissajous">
-    <div class="phrase-head"><span class="idx">00</span> /LISSAJOUS<span class="collapse-arrow">▾</span></div>
+  <div class="phrase collapsed" id="sec-lissajous">
+    <div class="phrase-head"><span class="idx">00</span> /LJ<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div style="border:1px solid var(--lcd-dim); background:var(--bg2); padding:8px;">
       <canvas id="lissajous" style="width:100%; height:260px; display:block; cursor:crosshair;"></canvas>
       <div style="text-align:center; margin-top:8px; font-size:13px; letter-spacing:1px;">
-        x(θ) = sin(<span id="freqXVal">3.0</span>θ + π/2)&nbsp;&nbsp;&nbsp;y(θ) = sin(<span id="freqYVal">2.0</span>θ)
+        x(θ) = sin(<span id="freqXVal">3.0</span>θ + φ)&nbsp;&nbsp;&nbsp;y(θ) = sin(<span id="freqYVal">2.0</span>θ)
+      </div>
+      <div style="text-align:center; margin-top:6px; font-size:11px; letter-spacing:1px; opacity:.6;">
+        <a href="https://en.wikipedia.org/wiki/Lissajous_curve" target="_blank" rel="noopener" style="color:inherit;">what's a Lissajous curve? →</a>
       </div>
     </div>
     </div>
@@ -941,7 +1047,7 @@ footer{
   </div>
 
   <!-- CONTACT -->
-  <div class="contact" id="sec-contact">
+  <div class="contact collapsed" id="sec-contact">
     <div class="rowlabel collapse-header"><span>/CONTACT</span><span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div class="contact-line"><span class="lbl">GITHUB</span><a href="https://github.com/antonelse" target="_blank" rel="noopener">github.com/antonelse</a></div>
@@ -1004,26 +1110,26 @@ const SITE_DATA = {
       desc: "Design and develop lyrics and audio analysis tools — Sentinel (copyright detection) and the Transcription API, from concept to product" },
     { role: "Teaching Assistant", org: "Politecnico di Milano", period: "2024-2025", note: 210,
       desc: "M.Sc. course \"Computer Music: Languages and Systems\" — SuperCollider, JUCE, algorithmic composition, live coding. Co-examiner Spring 2024 & 2025" },
-    { role: "Professor / Visiting Professor", org: "CPM Music Institute", period: "2022-2025", note: 200,
-      desc: "Fundamentals of Electronics for the AFAM Pro Audio Engineer degree, A.Y. 2022/23 through 2024/25" },
     { role: "Research Intern", org: "Arianet s.r.l", period: "2023-2024", note: 190,
       desc: "Graph-based pollutant forecasting and sparse gas emission downscaling" },
+    { role: "Radio DJ", org: "Fritto FM", period: "2023-2024", note: 164,
+      desc: "Radio DJ and music selection curator" },
+    { role: "Professor / Visiting Professor", org: "CPM Music Institute", period: "2022-2025", note: 200,
+      desc: "Fundamentals of Electronics for the AFAM Pro Audio Engineer degree, A.Y. 2022/23 through 2024/25" },
+    { role: "Disk Jockey", org: "INBEATWIN STUDIO", period: "2022-2023", note: 156,
+      desc: "DJ and music selection curator" },
     { role: "PhD Candidate", org: "Politecnico di Milano — ISPL", period: "2021-2025", note: 180,
       desc: "Image super-resolution, spatiotemporal forecasting, multimedia signal processing and audio forensics at the Image and Sound Processing Lab. Peer reviewer for signal processing conferences/journals; IT team member on the lab's computing infrastructure" },
     { role: "Member & Coordinator", org: "analogpolimi", period: "2019-2025", note: 172,
       desc: "Community-driven analog photography collective powered by PoliMi students — team member and workshop coordinator" },
-    { role: "Radio DJ", org: "Fritto FM", period: "2023-2024", note: 164,
-      desc: "Radio DJ and music selection curator" },
-    { role: "Disk Jockey", org: "INBEATWIN STUDIO", period: "2022-2023", note: 156,
-      desc: "DJ and music selection curator" },
-    { role: "Freelance Musician", org: "Freelance", period: "2013-now", note: 148,
-      desc: "Drummer for several bands, electronic music producer, cajon player, field recordings, live coding, deejaying" },
     { role: "Radio DJ / Host", org: "RadioCULT", period: "2018-2019", note: 140,
       desc: "Host and radio DJ of the program \"HZZØ\"; music selection curator" },
     { role: "Radio DJ", org: "NSV Worldwide", period: "2017", note: 132,
       desc: "Radio DJ and music selection curator" },
     { role: "Event Coordinator", org: "Amegao", period: "2015-2018", note: 124,
       desc: "Event coordination, audio technician, DJ" },
+    { role: "Freelance Musician", org: "Freelance", period: "2013-now", note: 148,
+      desc: "Drummer for several bands, electronic music producer, cajon player, field recordings, live coding, deejaying" },
   ],
 
   EDUCATION: [
@@ -1535,7 +1641,7 @@ const SITE_DATA = {
     // mouse-reactive frequency ratios (a:b) driven by X/Y position only, eased
     let targetFreqA = 3, targetFreqB = 2;
     let freqA = 3, freqB = 2;
-    const fixedDelta = Math.PI/2; // constant phase offset, not mouse-driven
+    let phaseClock = 0; // slowly oscillates the phase offset for extra shape variety
 
     const freqXEl = document.getElementById('freqXVal');
     const freqYEl = document.getElementById('freqYVal');
@@ -1544,8 +1650,8 @@ const SITE_DATA = {
       const rect = canvas.getBoundingClientRect();
       const nx = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
       const ny = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
-      targetFreqA = 1 + nx * 7;      // 1..8
-      targetFreqB = 1 + ny * 7;      // 1..8
+      targetFreqA = 1 + nx * 7;      // 1..8, continuous
+      targetFreqB = 1 + ny * 7;      // 1..8, continuous
     }
     canvas.addEventListener('mousemove', (e)=> updateFromPointer(e.clientX, e.clientY));
     canvas.addEventListener('mouseleave', ()=>{ targetFreqA = 3; targetFreqB = 2; });
@@ -1572,6 +1678,8 @@ const SITE_DATA = {
 
       freqA += (targetFreqA - freqA) * 0.08;
       freqB += (targetFreqB - freqB) * 0.08;
+      phaseClock += 0.006; // slow, continuous — cycles the phase offset over ~17s
+      const phase = Math.PI/2 + Math.sin(phaseClock) * (Math.PI/2);
 
       freqXEl.textContent = freqA.toFixed(1);
       freqYEl.textContent = freqB.toFixed(1);
@@ -1583,7 +1691,7 @@ const SITE_DATA = {
 
       for(let i=0; i<=POINTS; i++){
         const theta = (i/POINTS) * Math.PI * 2;
-        const x = cx + rx * Math.sin(freqA*theta + fixedDelta + t);
+        const x = cx + rx * Math.sin(freqA*theta + phase + t);
         const y = cy + ry * Math.sin(freqB*theta + t);
         const px = quant(x, PIXEL);
         const py = quant(y, PIXEL);
@@ -1652,22 +1760,34 @@ const SITE_DATA = {
       });
     });
 
-    if('IntersectionObserver' in window){
-      const observer = new IntersectionObserver((entries)=>{
-        const visible = entries.filter(e => e.isIntersecting);
-        if(visible.length === 0) return;
-        visible.sort((a,b)=> a.boundingClientRect.top - b.boundingClientRect.top);
-        const link = links.find(a => a.dataset.target === visible[0].target.id);
-        if(link){
-          links.forEach(a=>a.classList.remove('active'));
-          link.classList.add('active');
-        }
-      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    // Highlight the section whose top has most recently passed a fixed
+    // reference line near the top of the viewport (just under topbar+nav),
+    // rather than relying on a narrow, height-sensitive intersection band —
+    // that broke down whenever sections had very different heights
+    // (e.g. a collapsed section right after a tall expanded one).
+    const activeLineOffset = 130;
+    let rafPending = false;
 
-      sections.forEach(s => observer.observe(s));
+    function updateActiveLink(){
+      rafPending = false;
+      const refY = window.scrollY + activeLineOffset;
+      let current = sections[0];
+      for(const sec of sections){
+        if(sec.offsetTop <= refY) current = sec; else break;
+      }
+      const link = links.find(a => a.dataset.target === current.id);
+      if(link){
+        links.forEach(a=>a.classList.remove('active'));
+        link.classList.add('active');
+      }
     }
+    function requestUpdate(){
+      if(!rafPending){ rafPending = true; requestAnimationFrame(updateActiveLink); }
+    }
+    window.addEventListener('scroll', requestUpdate, {passive:true});
+    window.addEventListener('resize', requestUpdate);
+    updateActiveLink();
   })();
-
   // ---- Save & Exit: ASCII logo easter egg ----
   (function(){
     const btn = document.getElementById('saveExitBtn');
@@ -1860,7 +1980,7 @@ const SITE_DATA = {
 
     const collapseAllBtn = document.getElementById('collapseAllBtn');
     if(collapseAllBtn){
-      let allCollapsed = false;
+      let allCollapsed = true;
       collapseAllBtn.addEventListener('click', ()=>{
         allCollapsed = !allCollapsed;
         document.querySelectorAll('.phrase').forEach(el => el.classList.toggle('collapsed', allCollapsed));
@@ -1869,6 +1989,8 @@ const SITE_DATA = {
         collapseAllBtn.setAttribute('aria-pressed', String(allCollapsed));
         collapseAllBtn.title = allCollapsed ? 'Expand all sections' : 'Collapse all sections';
         collapseAllBtn.querySelector('.collapse-icon').textContent = allCollapsed ? '⌄⌃' : '⌃⌄';
+        // canvases (lissajous etc) init to 0-size while hidden; force a re-layout
+        setTimeout(()=> window.dispatchEvent(new Event('resize')), 10);
       });
       collapseAllBtn.addEventListener('keydown', (e)=>{
         if(e.key === 'Enter' || e.key === ' '){
@@ -1962,6 +2084,21 @@ const SITE_DATA = {
     window.addEventListener(evt, resetIdle, {passive:true});
   });
   resetIdle();
+})();
+
+// ---- 8-bit custom cursor: follows the mouse, desktop only ----
+(function(){
+  const cursor = document.getElementById('cursor8bit');
+  if(!cursor) return;
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+  window.addEventListener('mousemove', (e)=>{
+    cursor.classList.add('is-active');
+    cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+  }, {passive:true});
+
+  document.addEventListener('mouseleave', ()=> cursor.classList.remove('is-active'));
+  document.addEventListener('mouseenter', ()=> cursor.classList.add('is-active'));
 })();
 </script>
 
