@@ -1014,6 +1014,10 @@ footer{
         <div style="color:var(--lcd-dim); font-size:12px; letter-spacing:1px; padding:4px 0;">— COMING SOON —</div>
       </div>
 
+      <div class="subsection-head" id="sec-influences-coding">CODING</div>
+      <div class="samples" id="infCodingSamples">
+      </div>
+
       <div class="subsection-head" id="sec-influences-watching">WATCHING</div>
       <div class="samples" id="infWatchingSamples">
       </div>
@@ -1219,6 +1223,10 @@ const SITE_DATA = {
         desc: "A bunch of drum/synth kits made for the Elektron MachineDrum SPSI MKII, updated periodically",
         tags: ["elektron", "sound-design"],
         linkText: "→ github.com/antonelse/MD-SPSI-MKII-ae", linkUrl: "https://github.com/antonelse/MD-SPSI-MKII-ae" },
+      { code: "AUD_05", meta: "2021", title: "sequenze", note: 230,
+        desc: "Ten live-recorded cuts from two semi-lockdown microKorg sessions, picked in chronological order — no overdubs, no post-production, just a rough snapshot of the moment",
+        tags: ["microkorg", "live", "no-overdub"],
+        linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/sequenze" },
       { code: "AUD_01", meta: "2019–20", title: "Spectral Environment Album Series", note: 220,
         desc: "Three volumes of ambient audio textures — 20-minute pieces obtained through modular synthesis and time-spectral techniques, using only open-source tools",
         tags: ["modular-synthesis", "ambient"],
@@ -1226,10 +1234,18 @@ const SITE_DATA = {
     ],
 
     MIXES: [
-      { code: "MIX_01", meta: "2020", title: "COVID-19 Mixtape", note: 180,
+      { code: "MIX_01", meta: "2020", title: "COVID-19 Mixtapes", note: 180,
         desc: "A series of live-streamed DJ sessions from home, bringing together a community of friends who shared a deep connection with music during lockdown isolation",
         tags: ["live-stream", "dj-set"],
-        linkText: "→ listen on Mixcloud", linkUrl: "https://www.mixcloud.com/antonelse/covid-19-mixtape-3/?play=fb" },
+        linkText: "→ listen on Mixcloud", linkUrl: "https://www.mixcloud.com/antonelse/playlists/covid-19-mixtapes-%E3%83%84-%E3%83%84-%E3%83%84/" },
+      { code: "MIX_02", meta: "2019", title: "HZZØ x RadioCULT", note: 180,
+        desc: "Best of the month selecta — mixtape series for HZZØ, a show by antonelse and Mattia De Virgiliis on RadioCULT",
+        tags: ["radio", "dj-set"],
+        linkText: "→ listen on Mixcloud", linkUrl: "https://www.mixcloud.com/antonelse/playlists/hzz%C3%B8-x-radiocult-mixtapes-%E3%83%84-%E3%83%84-%E3%83%84/" },
+      { code: "MIX_03", meta: "2017", title: "HZZØ x NSV x Rocket Radio", note: 180,
+        desc: "Best of the month selecta — mixtape series for HZZØ, a show by antonelse and Mattia De Virgiliis on Rocket Radio",
+        tags: ["radio", "dj-set"],
+        linkText: "→ listen on Rocket Radio", linkUrl: "https://www.rocketradiolive.com/series/nsv" },
     ],
 
     VIDEO: [
@@ -1263,6 +1279,12 @@ const SITE_DATA = {
   },
 
   INFLUENCES: {
+
+    CODING: [
+      { code: "STARS", meta: "GitHub", title: "Starred Repos",
+        desc: "Repos I've starred over the years — tools, libraries and projects worth remembering",
+        linkText: "→ view stars on GitHub", linkUrl: "https://github.com/antonelse?tab=stars" },
+    ],
 
     WATCHING: [
       { code: "ARCHIVE", meta: "Instagram", title: "___d.kun",
@@ -1350,6 +1372,7 @@ const SITE_DATA = {
   renderSampleCards('projVideoSamples', SITE_DATA.PROJECTS.VIDEO);
   renderSampleCards('projImagesSamples', SITE_DATA.PROJECTS.IMAGES);
 
+  renderSampleCards('infCodingSamples', SITE_DATA.INFLUENCES.CODING);
   renderSampleCards('infWatchingSamples', SITE_DATA.INFLUENCES.WATCHING);
   renderSampleCards('infListeningSamples', SITE_DATA.INFLUENCES.LISTENING);
   renderSampleCards('infWishingSamples', SITE_DATA.INFLUENCES.WISHING);
