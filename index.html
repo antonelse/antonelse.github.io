@@ -49,7 +49,10 @@
     "https://www.mixcloud.com/antonelse/",
     "https://hearthis.at/antonelse/",
     "https://www.instagram.com/antonelse.exe/",
-    "https://bsky.app/profile/antonelse.bsky.social"
+    "https://bsky.app/profile/antonelse.bsky.social",
+    "https://mastodon.social/@antonelse",
+    "https://www.behance.net/antonelse",
+    "https://www.discogs.com/user/AntonElse"
   ]
 }
 </script>
@@ -475,6 +478,10 @@ body::after{
   font-weight:bold;
   cursor:pointer;
   user-select:none;
+  transition: box-shadow 0.1s;
+}
+.phrase-head:hover{
+  box-shadow: 0 0 14px rgba(157,255,107,0.35);
 }
 .phrase-head:focus-visible,
 .collapse-header:focus-visible{
@@ -507,6 +514,7 @@ body::after{
   align-items:center;
   cursor:pointer;
   user-select:none;
+  padding: 6px 16px;
 }
 
 /* ===== TRACKER TABLE ===== */
@@ -560,37 +568,6 @@ body::after{
 .tracker .period{ color: var(--lcd-dim); font-size:12px; white-space:nowrap; }
 .tracker .desc{ color: var(--lcd); opacity:1; font-size:13.5px; line-height:1.55; }
 
-/* ===== SKILLS AS EFFECT COLUMNS ===== */
-.fx-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
-  gap: 8px;
-  margin-top: 10px;
-}
-.fx{
-  border:1px solid var(--lcd-dim);
-  padding: 8px 10px;
-  background: var(--bg2);
-  position:relative;
-}
-.fx::before{
-  content: "▮";
-  color: var(--amber);
-  margin-right:6px;
-}
-.fx .fx-name{ font-family: var(--font-display); color: var(--lcd-bright); font-size:13px; }
-.fx .fx-bar{
-  margin-top:6px;
-  height:6px;
-  background: rgba(157,255,107,0.15);
-  position:relative;
-}
-.fx .fx-bar-fill{
-  height:100%;
-  background: var(--lcd);
-  box-shadow: 0 0 6px var(--lcd);
-}
-
 /* ===== PROJECTS AS "SAMPLES" ===== */
 .subsection-head{
   font-family: var(--font-display);
@@ -604,32 +581,6 @@ body::after{
 }
 .subsection-head:first-of-type{
   margin-top: 4px;
-}
-.img-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
-.img-cell{
-  border: 1px solid var(--lcd-dim);
-  background: var(--bg2);
-}
-.img-ph{
-  aspect-ratio: 1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:11px;
-  color: var(--lcd-dim);
-  background:
-    repeating-linear-gradient(45deg, var(--grid) 0, var(--grid) 2px, transparent 2px, transparent 8px);
-  border-bottom: 1px solid var(--lcd-dim);
-}
-.img-cap{
-  font-size:10px;
-  color: var(--lcd-dim);
-  padding: 6px 8px;
 }
 .samples{
   display:grid;
@@ -731,7 +682,14 @@ body::after{
 .contact{
   margin-top: 30px;
   border: 2px solid var(--lcd);
-  padding: 16px;
+  transition: box-shadow 0.1s, border-color 0.1s;
+}
+.contact:hover{
+  border-color: var(--lcd-bright);
+  box-shadow: 0 0 14px rgba(157,255,107,0.35);
+}
+.contact .phrase-body{
+  padding: 0 16px 16px;
 }
 .contact-line{
   display:flex;
@@ -774,7 +732,6 @@ footer{
   .tracker th:nth-child(3), .tracker td:nth-child(3){ display:none; } /* hide period col on small */
   .tracker .role{ font-size:13px; }
   .tracker .desc{ font-size:12.5px; line-height:1.5; }
-  .fx-grid{ grid-template-columns: repeat(2, 1fr); }
   .samples{ grid-template-columns: 1fr; }
   .bc-grid{ grid-template-columns: 1fr; }
   .contact-line{ flex-direction:column; gap:2px; }
@@ -787,7 +744,6 @@ footer{
 }
 
 @media (max-width:400px){
-  .fx-grid{ grid-template-columns: 1fr; }
   .title-big{ font-size:19px; }
   .stats{ grid-template-columns: 1fr 1fr; }
 }.avatar-pixel{
@@ -870,7 +826,7 @@ footer{
     <a href="#sec-publications" data-target="sec-publications">PUBS</a>
     <a href="#sec-awards" data-target="sec-awards">AWARDS</a>
     <a href="#sec-influences" data-target="sec-influences">INFL</a>
-    <a href="#sec-contact" data-target="sec-contact">CONTACT</a>
+    <a href="#sec-contact" data-target="sec-contact">CONTACTS</a>
   </nav>
 
   <div class="header" id="sec-about" style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
@@ -1002,21 +958,9 @@ footer{
     <div class="samples" id="projVideoSamples">
     </div>
 
-    <!-- DIY subsection -->
-    <div class="subsection-head" id="sec-diy">DIY</div>
-    <div class="samples" id="projDiySamples">
-    </div>
-
     <!-- IMAGES subsection -->
     <div class="subsection-head" id="sec-images">IMAGES</div>
-    <div class="img-grid">
-      <div style="color:var(--lcd-dim); font-size:12px; letter-spacing:1px; padding:4px 0;">— COMING SOON —</div>
-      <!-- To show a photo, replace the line above with a cell like:
-      <div class="img-cell">
-        <img src="imgs/photo.jpg" alt="Caption" style="width:100%; border:1px solid var(--lcd-dim);">
-        <div class="img-cap">Caption, year</div>
-      </div>
-      -->
+    <div class="samples" id="projImagesSamples">
     </div>
 
     </div>
@@ -1087,7 +1031,7 @@ footer{
 
   <!-- CONTACT -->
   <div class="contact collapsed" id="sec-contact">
-    <div class="rowlabel collapse-header" role="button" tabindex="0" aria-expanded="false"><span>/CONTACT</span><span class="collapse-arrow">▾</span></div>
+    <div class="rowlabel collapse-header" role="button" tabindex="0" aria-expanded="false"><span>/CONTACTS</span><span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div class="contact-line"><span class="lbl">GITHUB</span><a href="https://github.com/antonelse" target="_blank" rel="noopener">github.com/antonelse</a></div>
     <div class="contact-line"><span class="lbl">LINKEDIN</span><a href="https://www.linkedin.com/in/antoniogiganti/" target="_blank" rel="noopener">linkedin.com/in/antoniogiganti</a></div>
@@ -1098,6 +1042,9 @@ footer{
     <div class="contact-line"><span class="lbl">HEARTHIS.AT</span><a href="https://hearthis.at/antonelse/" target="_blank" rel="noopener">hearthis.at/antonelse</a></div>
     <div class="contact-line"><span class="lbl">INSTAGRAM</span><a href="https://www.instagram.com/antonelse.exe/" target="_blank" rel="noopener">@antonelse.exe</a></div>
     <div class="contact-line"><span class="lbl">BLUESKY</span><a href="https://bsky.app/profile/antonelse.bsky.social" target="_blank" rel="noopener">@antonelse.bsky.social</a></div>
+    <div class="contact-line"><span class="lbl">MASTODON</span><a href="https://mastodon.social/@antonelse" target="_blank" rel="noopener">@antonelse@mastodon.social</a></div>
+    <div class="contact-line"><span class="lbl">BEHANCE</span><a href="https://www.behance.net/antonelse" target="_blank" rel="noopener">behance.net/antonelse</a></div>
+    <div class="contact-line"><span class="lbl">DISCOGS</span><a href="https://www.discogs.com/user/AntonElse" target="_blank" rel="noopener">discogs.com/user/AntonElse</a></div>
     </div>
   </div>
 
@@ -1233,6 +1180,10 @@ const SITE_DATA = {
   PROJECTS: {
 
     SOFTWARE: [
+      { code: "SMPL_05", meta: "2026", title: "AnDrone.io", note: 300,
+        desc: "A DIY drone synthesizer based on the Axoloti (now Ksoloti) DSP board — MIDI mappings, patches and build guide",
+        tags: ["dsp", "midi", "hardware"],
+        linkText: "→ github.com/antonelse/MIDI-mappings-ae", linkUrl: "https://github.com/antonelse/MIDI-mappings-ae/blob/main/axoloti_drone-evolution_uc33e/GUIDE.md" },
       { code: "SMPL_01", meta: "2022–25", title: "Super-Resolution of BVOC Emissions", note: 330,
         desc: "Official repository of PhD research on super-resolution of biogenic emission maps via deep learning and domain adaptation",
         tags: ["pytorch", "remote-sensing", "super-resolution"],
@@ -1245,6 +1196,10 @@ const SITE_DATA = {
         desc: "Environment for enhanced live coding performances — an interactive installation where the audience shapes the sound through a web app",
         tags: ["live-coding", "webapp"],
         linkText: "→ github.com/antonelse/co2des", linkUrl: "https://github.com/antonelse/co2des" },
+      { code: "SMPL_06", meta: "2021", title: "Analog Shutterino",
+        desc: "Shutter trigger for analog cameras — linear actuator and ultrasonic sensor on Arduino, used as a nighttime phototrap",
+        tags: ["arduino", "analog-photography"],
+        linkText: "→ link coming soon", linkUrl: "#" },
       { code: "SMPL_04", meta: "2020", title: "toneZ", note: 410,
         desc: "Browser-based tonnetz diagram viewer for visualizing harmonic relationships in music",
         tags: ["p5.js", "tone.js"],
@@ -1252,10 +1207,6 @@ const SITE_DATA = {
     ],
 
     AUDIO: [
-      { code: "AUD_01", meta: "2019–20", title: "Spectral Environment Album Series", note: 220,
-        desc: "Three volumes of ambient audio textures — 20-minute pieces obtained through modular synthesis and time-spectral techniques, using only open-source tools",
-        tags: ["modular-synthesis", "ambient"],
-        linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/spectral-environment-iii" },
       { code: "AUD_02", meta: "2026", title: "live from giardino", note: 210,
         desc: "Live album recorded with AnDrone.io, the DIY drone synthesizer built on the Axoloti/Ksoloti DSP board",
         tags: ["androne.io", "live", "drone-synth"],
@@ -1264,6 +1215,14 @@ const SITE_DATA = {
         desc: "An event about the perception of place stretched over time, in continuous transformation — same event recurring a year apart, always in symbiosis with the Villa Cappuccini garden",
         tags: ["site-specific", "performance"],
         linkText: "→ Giardino Villa Cappuccini on Instagram", linkUrl: "https://www.instagram.com/giardinovillacappuccini/" },
+      { code: "AUD_04", meta: "2021", title: "MD-SPSI-MKII-ae",
+        desc: "A bunch of drum/synth kits made for the Elektron MachineDrum SPSI MKII, updated periodically",
+        tags: ["elektron", "sound-design"],
+        linkText: "→ github.com/antonelse/MD-SPSI-MKII-ae", linkUrl: "https://github.com/antonelse/MD-SPSI-MKII-ae" },
+      { code: "AUD_01", meta: "2019–20", title: "Spectral Environment Album Series", note: 220,
+        desc: "Three volumes of ambient audio textures — 20-minute pieces obtained through modular synthesis and time-spectral techniques, using only open-source tools",
+        tags: ["modular-synthesis", "ambient"],
+        linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/spectral-environment-iii" },
     ],
 
     MIXES: [
@@ -1296,19 +1255,10 @@ const SITE_DATA = {
         linkText: "→ link coming soon", linkUrl: "#" },
     ],
 
-    DIY: [
-      { code: "DIY_01", meta: "2026", title: "AnDrone.io", note: 300,
-        desc: "A DIY drone synthesizer based on the Axoloti (now Ksoloti) DSP board — MIDI mappings, patches and build guide",
-        tags: ["dsp", "midi", "hardware"],
-        linkText: "→ github.com/antonelse/MIDI-mappings-ae", linkUrl: "https://github.com/antonelse/MIDI-mappings-ae/blob/main/axoloti_drone-evolution_uc33e/GUIDE.md" },
-      { code: "DIY_02", meta: "2021", title: "MD-SPSI-MKII-ae",
-        desc: "A bunch of drum/synth kits made for the Elektron MachineDrum SPSI MKII, updated periodically",
-        tags: ["elektron", "sound-design"],
-        linkText: "→ github.com/antonelse/MD-SPSI-MKII-ae", linkUrl: "https://github.com/antonelse/MD-SPSI-MKII-ae" },
-      { code: "DIY_03", meta: "2021", title: "Analog Shutterino",
-        desc: "Shutter trigger for analog cameras — linear actuator and ultrasonic sensor on Arduino, used as a nighttime phototrap",
-        tags: ["arduino", "analog-photography"],
-        linkText: "→ link coming soon", linkUrl: "#" },
+    IMAGES: [
+      { code: "GALLERY", meta: "Behance", title: "Behance Portfolio",
+        desc: "A visual archive of digital/analog brutalism, architecture and the aesthetics that stick with me",
+        linkText: "→ view on Behance", linkUrl: "https://www.behance.net/antonelse" },
     ],
   },
 
@@ -1318,9 +1268,6 @@ const SITE_DATA = {
       { code: "ARCHIVE", meta: "Instagram", title: "___d.kun",
         desc: "A container of cover art from the records I've listened to over the years",
         linkText: "→ view on Instagram", linkUrl: "https://www.instagram.com/___d.kun/" },
-      { code: "PLAYLIST", meta: "YouTube", title: "Liked Videos",
-        desc: "A running, unfiltered archive of everything I've liked on YouTube",
-        linkText: "→ view playlist on YouTube", linkUrl: "https://www.youtube.com/playlist?list=LL" },
     ],
 
     LISTENING: [
@@ -1328,8 +1275,11 @@ const SITE_DATA = {
         desc: "Mixes I keep coming back to — the ones shaping what I listen to right now",
         linkText: "→ listen on SoundCloud", linkUrl: "https://soundcloud.com/thefavela" },
       { code: "COLLECTION", meta: "Bandcamp", title: "Bandcamp Collection",
-        desc: "Albums I've bought — a running log of what I'm actually listening to",
+        desc: "Albums I've bought — a running log of textures and rhythms that keep pulling me back in",
         linkText: "→ view collection on Bandcamp", linkUrl: "https://bandcamp.com/antonelse" },
+      { code: "COLLECTION", meta: "Discogs", title: "Discogs Collection",
+        desc: "Vinyl I own — sleeves and grooves that reward slow, deliberate listening",
+        linkText: "→ view collection on Discogs", linkUrl: "https://www.discogs.com/user/AntonElse/collection" },
     ],
 
     WISHING: [
@@ -1337,8 +1287,8 @@ const SITE_DATA = {
         desc: "Records I've been meaning to pick up — updated whenever something new catches my ear",
         linkText: "→ view wishlist on Bandcamp", linkUrl: "https://bandcamp.com/antonelse/wishlist" },
       { code: "WANT", meta: "Discogs", title: "Discogs Wantlist",
-        desc: "Vinyl I'm hunting for — mostly electronic, drum & bass and modular-adjacent stuff",
-        linkText: "→ view wantlist on Discogs", linkUrl: "https://www.discogs.com/mywantlist" },
+        desc: "Vinyl I'm hunting for — the kind of pressings that reward patience and a good needle",
+        linkText: "→ view wantlist on Discogs", linkUrl: "https://www.discogs.com/wantlist?user=antonelse" },
     ],
   },
 };
@@ -1398,7 +1348,7 @@ const SITE_DATA = {
   renderSampleCards('projAudioSamples', SITE_DATA.PROJECTS.AUDIO);
   renderSampleCards('projMixesSamples', SITE_DATA.PROJECTS.MIXES);
   renderSampleCards('projVideoSamples', SITE_DATA.PROJECTS.VIDEO);
-  renderSampleCards('projDiySamples', SITE_DATA.PROJECTS.DIY);
+  renderSampleCards('projImagesSamples', SITE_DATA.PROJECTS.IMAGES);
 
   renderSampleCards('infWatchingSamples', SITE_DATA.INFLUENCES.WATCHING);
   renderSampleCards('infListeningSamples', SITE_DATA.INFLUENCES.LISTENING);

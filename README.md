@@ -9,7 +9,7 @@ embedded as base64). No build step, no dependencies.
    domain `https://antonelse.github.io/`; any other name works, just lives at
    `.../<repo-name>/` instead).
 2. Push these files to the repo root: `index.html`, `og-image.png`,
-   `robots.txt`, `sitemap.xml`, `imgs/`.
+   `robots.txt`, `sitemap.xml`.
 3. **Settings → Pages → Source**: Deploy from a branch, `main`, `/ (root)`.
 4. Live in a minute or two, at the URL GitHub shows you.
 
@@ -33,7 +33,7 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 
 - Add/edit/remove an entry → add/edit/remove its object in the array.
 - Reorder → reorder the objects (STEP numbers 00, 01, 02… are automatic).
-  `WORK` is currently ordered by start year, most recent first — keep new
+  `WORK` and every `PROJECTS.*` array are ordered newest-first — keep new
   entries in that order (ties broken by whichever ended later).
 
 | Section | Fields |
@@ -46,13 +46,15 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - `note`: optional, the hover synth pitch (any number, or omit for silent).
 - `desc`: escape `"` as `\"` (it's a JS string, not raw HTML).
 
+**CONTACTS is the one exception** — it's not in `SITE_DATA`, just plain
+`.contact-line` markup near the end of the `<body>`. To add/remove a
+contact, copy/edit a line there directly, and also update `sameAs` in the
+`ld+json` structured-data block near the top (same links, helps SEO).
+
 ## Open loose ends
 
-- **PROJECTS → IMAGES**: still a "— COMING SOON —" placeholder (plain HTML,
-  not in `SITE_DATA`). Commented example markup is right below it.
-- **PROJECTS → DIY → Analog Shutterino**, and **VIDEO → METRO / Ozne
+- **PROJECTS → SOFTWARE → Analog Shutterino**, and **VIDEO → METRO / Ozne
   Production**: `linkUrl: "#"`, no public link yet — update in `SITE_DATA`.
-- **`imgs/`**: empty — drop files here for PROJECTS → IMAGES.
 - **INFLUENCES → READING**: not yet in `SITE_DATA` (nothing to show). Once
   populated: add `READING: [...]` under `SITE_DATA.INFLUENCES` (same shape
   as `WATCHING`), give its `.samples` div `id="infReadingSamples"`, and call
@@ -76,20 +78,16 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
   the mouse, spins slowly in fake-3D and bobs; it renders under the CRT
   overlay so it's affected by the scanlines/vignette like the rest of the
   page. Off on touch devices, where the native pointer is untouched.
-- Avatar: hover switches low-res B&W → full color.
 - After ~60s idle, an ASCII tunnel screensaver kicks in; any input dismisses it.
-- Top bar: **PLAY** runs a demo playhead over WORK rows · **MUTE/SOUND**
-  toggles synth blips on row/card hover (off by default; VU meter next to it
-  reads real audio level) · **BPM −/+** playhead speed · **LIGHT/DARK** theme
-  · **CRT** scanline+pixel-mask effect · **⌃⌄ ALL** collapse/expand all ·
-  **REC ■** is decorative, not a real recording state.
+- Top bar **MUTE/SOUND** and **REC ■** aren't what they look like: sound is
+  off by default and just adds synth blips on hover, REC is purely decorative
+  (no actual recording).
 - Footer **"SAVE & EXIT"** is an easter egg (ASCII logo + typed message).
 - Title ("ANTONIO GIGANTI") is `contenteditable` and self-heals: edit or
   clear it, wait 1.8s after you stop, it retypes the real name (rebuilds
   stripped `<span>`s if needed). Native caret is hidden here (iOS renders it
   oversized with the custom pixel font) — the blinking block next to the
   text is the real cursor indicator.
-- Footer "last modified" date is automatic (`document.lastModified`).
 
 ## Files
 
@@ -99,7 +97,6 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 | `og-image.png` | Social preview image (LinkedIn, Twitter, Slack, etc.) |
 | `robots.txt` | Search engine indexing permissions |
 | `sitemap.xml` | Search engine discovery — update URL if using a custom domain |
-| `imgs/` | Images referenced from PROJECTS → IMAGES |
 
 ## Credits / licenses
 
