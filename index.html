@@ -372,6 +372,10 @@ body::after{
   cursor: text;
   text-shadow: 0 0 8px rgba(157,255,107,0.6);
 }
+.title-big:focus-visible{
+  outline: 2px dashed var(--lcd-bright);
+  outline-offset: 4px;
+}
 .subtitle{
   font-family: var(--font-body);
   font-size:15px;
@@ -471,6 +475,11 @@ body::after{
   font-weight:bold;
   cursor:pointer;
   user-select:none;
+}
+.phrase-head:focus-visible,
+.collapse-header:focus-visible{
+  outline: 2px solid var(--lcd-bright);
+  outline-offset: -2px;
 }
 .phrase-head .idx{
   background: var(--lcd-bright);
@@ -884,10 +893,10 @@ footer{
 
   <!-- LISSAJOUS VISUALIZER -->
   <div class="phrase collapsed" id="sec-lissajous">
-    <div class="phrase-head"><span class="idx">00</span> /LJ<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">00</span> /LJ<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div style="border:1px solid var(--lcd-dim); background:var(--bg2); padding:8px;">
-      <canvas id="lissajous" style="width:100%; height:260px; display:block; cursor:crosshair;"></canvas>
+      <canvas id="lissajous" style="width:100%; height:260px; display:block; cursor:crosshair;" aria-hidden="true"></canvas>
       <div style="text-align:center; margin-top:8px; font-size:13px; letter-spacing:1px;">
         x(θ) = sin(<span id="freqXVal">3.0</span>θ + φ)&nbsp;&nbsp;&nbsp;y(θ) = sin(<span id="freqYVal">2.0</span>θ)
       </div>
@@ -900,7 +909,7 @@ footer{
 
   <!-- WORK EXPERIENCE -->
   <div class="phrase collapsed" id="sec-work">
-    <div class="phrase-head"><span class="idx">01</span> /WORK<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">01</span> /WORK<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
       <thead>
@@ -919,7 +928,7 @@ footer{
 
   <!-- EDUCATION -->
   <div class="phrase collapsed" id="sec-education">
-    <div class="phrase-head"><span class="idx">02</span> /EDUCATION<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">02</span> /EDUCATION<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
       <thead>
@@ -938,7 +947,7 @@ footer{
 
   <!-- PROJECTS -->
   <div class="phrase collapsed" id="sec-projects">
-    <div class="phrase-head"><span class="idx">03</span> /PROJECTS<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">03</span> /PROJECTS<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
 
     <div class="subsection-head">SOFTWARE</div>
@@ -1015,7 +1024,7 @@ footer{
 
   <!-- PUBLICATIONS -->
   <div class="phrase collapsed" id="sec-publications">
-    <div class="phrase-head"><span class="idx">04</span> /PUBLICATIONS<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">04</span> /PUBLICATIONS<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
       <thead>
@@ -1034,7 +1043,7 @@ footer{
 
   <!-- AWARDS -->
   <div class="phrase collapsed" id="sec-awards">
-    <div class="phrase-head"><span class="idx">05</span> /AWARDS<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">05</span> /AWARDS<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
       <thead>
@@ -1053,7 +1062,7 @@ footer{
 
   <!-- INFLUENCES -->
   <div class="phrase collapsed" id="sec-influences">
-    <div class="phrase-head"><span class="idx">06</span> /INFLUENCES<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">06</span> /INFLUENCES<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
 
       <div class="subsection-head" id="sec-influences-reading">READING</div>
@@ -1078,7 +1087,7 @@ footer{
 
   <!-- CONTACT -->
   <div class="contact collapsed" id="sec-contact">
-    <div class="rowlabel collapse-header"><span>/CONTACT</span><span class="collapse-arrow">▾</span></div>
+    <div class="rowlabel collapse-header" role="button" tabindex="0" aria-expanded="false"><span>/CONTACT</span><span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <div class="contact-line"><span class="lbl">GITHUB</span><a href="https://github.com/antonelse" target="_blank" rel="noopener">github.com/antonelse</a></div>
     <div class="contact-line"><span class="lbl">LINKEDIN</span><a href="https://www.linkedin.com/in/antoniogiganti/" target="_blank" rel="noopener">linkedin.com/in/antoniogiganti</a></div>
@@ -1807,8 +1816,9 @@ const SITE_DATA = {
       }
       const link = links.find(a => a.dataset.target === current.id);
       if(link){
-        links.forEach(a=>a.classList.remove('active'));
+        links.forEach(a=>{ a.classList.remove('active'); a.removeAttribute('aria-current'); });
         link.classList.add('active');
+        link.setAttribute('aria-current', 'true');
       }
     }
     function requestUpdate(){
@@ -1995,17 +2005,25 @@ const SITE_DATA = {
 
   // ---- Collapsible sections ----
   (function(){
+    function toggleSection(head){
+      const isCollapsed = head.parentElement.classList.toggle('collapsed');
+      head.setAttribute('aria-expanded', String(!isCollapsed));
+      // canvases (lissajous etc) init to 0-size while hidden; force a re-layout
+      setTimeout(()=> window.dispatchEvent(new Event('resize')), 10);
+    }
+    function onHeadKeydown(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggleSection(e.currentTarget);
+      }
+    }
     document.querySelectorAll('.phrase > .phrase-head').forEach(head=>{
-      head.addEventListener('click', ()=>{
-        head.parentElement.classList.toggle('collapsed');
-        // canvases (lissajous etc) init to 0-size while hidden; force a re-layout
-        setTimeout(()=> window.dispatchEvent(new Event('resize')), 10);
-      });
+      head.addEventListener('click', ()=> toggleSection(head));
+      head.addEventListener('keydown', onHeadKeydown);
     });
     document.querySelectorAll('.contact > .collapse-header').forEach(head=>{
-      head.addEventListener('click', ()=>{
-        head.parentElement.classList.toggle('collapsed');
-      });
+      head.addEventListener('click', ()=> toggleSection(head));
+      head.addEventListener('keydown', onHeadKeydown);
     });
 
     const collapseAllBtn = document.getElementById('collapseAllBtn');
@@ -2015,6 +2033,9 @@ const SITE_DATA = {
         allCollapsed = !allCollapsed;
         document.querySelectorAll('.phrase').forEach(el => el.classList.toggle('collapsed', allCollapsed));
         document.querySelectorAll('.contact').forEach(el => el.classList.toggle('collapsed', allCollapsed));
+        document.querySelectorAll('.phrase-head, .collapse-header').forEach(head=>{
+          head.setAttribute('aria-expanded', String(!allCollapsed));
+        });
         collapseAllBtn.classList.toggle('is-active', allCollapsed);
         collapseAllBtn.setAttribute('aria-pressed', String(allCollapsed));
         collapseAllBtn.title = allCollapsed ? 'Expand all sections' : 'Collapse all sections';
