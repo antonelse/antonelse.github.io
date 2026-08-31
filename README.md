@@ -1,7 +1,9 @@
 # antonelse portfolio — deploy instructions
 
 Single-file site: everything is in `index.html` (fonts, favicon, avatar images
-embedded as base64). No build step, no dependencies.
+embedded as base64). No build step, no dependencies. `attribution.html` and
+`privacy.html` are separate standalone pages that share the same embedded
+fonts/theme.
 
 ## Deploy on GitHub Pages
 
@@ -9,7 +11,7 @@ embedded as base64). No build step, no dependencies.
    domain `https://antonelse.github.io/`; any other name works, just lives at
    `.../<repo-name>/` instead).
 2. Push these files to the repo root: `index.html`, `og-image.png`,
-   `robots.txt`, `sitemap.xml`.
+   `robots.txt`, `sitemap.xml`, `attribution.html`, `privacy.html`.
 3. **Settings → Pages → Source**: Deploy from a branch, `main`, `/ (root)`.
 4. Live in a minute or two, at the URL GitHub shows you.
 
@@ -34,7 +36,11 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - Add/edit/remove an entry → add/edit/remove its object in the array.
 - Reorder → reorder the objects (STEP numbers 00, 01, 02… are automatic).
   `WORK` and every `PROJECTS.*` array are ordered newest-first — keep new
-  entries in that order (ties broken by whichever ended later).
+  entries in that order (ties broken by whichever ended later). The `code`
+  field (e.g. `SMPL_01`, `AUD_01`, `VID_01`) runs the other way: number 01
+  is the *oldest* item, counting up to the newest — so adding a new entry
+  at the top means bumping every existing code in that array by one and
+  giving the new entry the highest number. Cosmetic, not derived automatically.
 
 | Section | Fields |
 |---|---|
@@ -45,6 +51,7 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - `tags`: optional, omit (or `[]`) for no chips.
 - `note`: optional, the hover synth pitch (any number, or omit for silent).
 - `desc`: escape `"` as `\"` (it's a JS string, not raw HTML).
+- `AWARDS.period`: year only (no month) for consistency with other sections.
 
 **CONTACTS is the one exception** — it's not in `SITE_DATA`, just plain
 `.contact-line` markup near the end of the `<body>`. To add/remove a
@@ -66,8 +73,9 @@ contact, copy/edit a line there directly, and also update `sameAs` in the
   reference line near the top of the viewport as you scroll (not a plain
   visibility check, so it stays correct even when sections have very
   different heights). On wide screens (≥1320px) it becomes a sidebar fixed
-  to the left of the content, with PUBLICATIONS/INFLUENCES shown as
-  PUBS/INFL to fit — section headers stay full-length everywhere.
+  to the left of the content, with EDUCATION/PROJECTS/PUBLICATIONS/AWARDS/
+  INFLUENCES/CONTACTS shown as the shortened EDU/PROJ/PUBS/AWRD/INFL/CNTCT
+  to fit — section headers stay full-length everywhere.
 - **⌃⌄ ALL** expands every section on the first click, collapses on the
   second (click a section header to toggle just that one).
 - **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
@@ -83,6 +91,7 @@ contact, copy/edit a line there directly, and also update `sameAs` in the
   off by default and just adds synth blips on hover, REC is purely decorative
   (no actual recording).
 - Footer **"SAVE & EXIT"** is an easter egg (ASCII logo + typed message).
+  Next to it, **Attribution** and **Privacy** link to their standalone pages.
 - Title ("ANTONIO GIGANTI") is `contenteditable` and self-heals: edit or
   clear it, wait 1.8s after you stop, it retypes the real name (rebuilds
   stripped `<span>`s if needed). Native caret is hidden here (iOS renders it
@@ -94,19 +103,23 @@ contact, copy/edit a line there directly, and also update `sameAs` in the
 | File | Purpose |
 |---|---|
 | `index.html` | Entire site — HTML, CSS, JS, fonts, favicon, avatar images |
+| `attribution.html` | Credits page — fonts owed (license requirement) + inspiration links |
+| `privacy.html` | Privacy policy — plain description of what the site does/doesn't collect |
 | `og-image.png` | Social preview image (LinkedIn, Twitter, Slack, etc.) |
 | `robots.txt` | Search engine indexing permissions |
 | `sitemap.xml` | Search engine discovery — update URL if using a custom domain |
 
 ## Credits / licenses
 
-- **Elektron Pixel Font** (display font, embedded in `index.html`) — © 2008
+- **Elektron Pixel Font** (display font, embedded in every HTML file) — © 2008
   savingaurora, [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/),
   via [FontStruct](http://fontstruct.com/fontstructions/show/70152/elektron-pixel-font).
   Unofficial fan recreation, not affiliated with Elektron (the company).
-  Attribution required by the license — keep this note if you redistribute
-  the site.
-- **JetBrains Mono** (body font, loaded from Google Fonts) —
-  [SIL OFL 1.1](https://scripts.sil.org/OFL), no attribution required.
+  Attribution required by the license — kept both here and on the live
+  `attribution.html` page; keep this note if you redistribute the site.
+- **JetBrains Mono** (body font) — [SIL OFL 1.1](https://scripts.sil.org/OFL),
+  no attribution required. Self-hosted as base64-embedded woff2 in every HTML
+  file (not loaded from Google Fonts) so no visitor data is sent to Google on
+  page load.
 - No repo-wide LICENSE file: this is a personal portfolio with personal bio,
   photos and CV content, not open-source software — all rights reserved.
