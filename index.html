@@ -111,6 +111,11 @@
   --grid: rgba(255,255,255,0.08);
   --bc-filter: none;
   --topbar-text: #0a0a0a;
+  /* amber accent used only by the 8-bit cursor, kept separate from --amber
+     (which stays monochrome for links etc.) so the rest of the site is untouched */
+  --cursor-c1: #b6ffb6;
+  --cursor-c2: #33ff33;
+  --cursor-c3: #0e7a1e;
   /* Elektron: pixel display font, reserved for short UI labels/titles at 13px+ */
   --font-display: 'Elektron', 'Courier New', monospace;
   /* JetBrains Mono: readable body copy — used for anything meant to be actually read */
@@ -128,6 +133,9 @@ body.theme-light{
   --grid: rgba(0,0,0,0.06);
   --bc-filter: none;
   --topbar-text: #ffffff;
+  --cursor-c1: #2f7d2f;
+  --cursor-c2: #1a5c1a;
+  --cursor-c3: #0d3d0d;
 }
 
 body.crt-off::before,
@@ -157,15 +165,15 @@ body::before{
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(0,0,0,0.15) 0px,
-      rgba(0,0,0,0.15) 1px,
+      rgba(0,0,0,0.08) 0px,
+      rgba(0,0,0,0.08) 1px,
       transparent 2px,
       transparent 3px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(0,0,0,0.06) 0px,
-      rgba(0,0,0,0.06) 1px,
+      rgba(0,0,0,0.03) 0px,
+      rgba(0,0,0,0.03) 1px,
       transparent 2px,
       transparent 3px
     );
@@ -177,7 +185,7 @@ body::after{
   inset:0;
   pointer-events:none;
   z-index:151;
-  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);
+  background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.35) 100%);
 }
 
 .screen{
@@ -867,14 +875,14 @@ footer{
           <rect x="6" y="14" width="4"  height="2"/>
         </g>
         <!-- main triangle, isosceles, pointing down -->
-        <rect x="0" y="0"  width="16" height="2" fill="var(--lcd-bright)"/>
-        <rect x="0" y="2"  width="16" height="2" fill="var(--lcd-bright)"/>
-        <rect x="2" y="4"  width="12" height="2" fill="var(--lcd)"/>
-        <rect x="2" y="6"  width="12" height="2" fill="var(--lcd)"/>
-        <rect x="4" y="8"  width="8"  height="2" fill="var(--lcd)"/>
-        <rect x="4" y="10" width="8"  height="2" fill="var(--lcd-dim)"/>
-        <rect x="6" y="12" width="4"  height="2" fill="var(--lcd-dim)"/>
-        <rect x="6" y="14" width="4"  height="2" fill="var(--lcd-dim)"/>
+        <rect x="0" y="0"  width="16" height="2" fill="var(--cursor-c1)"/>
+        <rect x="0" y="2"  width="16" height="2" fill="var(--cursor-c1)"/>
+        <rect x="2" y="4"  width="12" height="2" fill="var(--cursor-c2)"/>
+        <rect x="2" y="6"  width="12" height="2" fill="var(--cursor-c2)"/>
+        <rect x="4" y="8"  width="8"  height="2" fill="var(--cursor-c2)"/>
+        <rect x="4" y="10" width="8"  height="2" fill="var(--cursor-c3)"/>
+        <rect x="6" y="12" width="4"  height="2" fill="var(--cursor-c3)"/>
+        <rect x="6" y="14" width="4"  height="2" fill="var(--cursor-c3)"/>
       </svg>
     </div>
   </div>
@@ -913,7 +921,7 @@ footer{
   <nav class="navmenu" id="navmenu">
     <a href="#sec-about" data-target="sec-about" class="active">ABOUT</a>
     <a href="#sec-lissajous" data-target="sec-lissajous">LJ</a>
-    <a href="#sec-work" data-target="sec-work">WORK</a>
+    <a href="#sec-work" data-target="sec-work">EXP</a>
     <a href="#sec-education" data-target="sec-education">EDU</a>
     <a href="#sec-projects" data-target="sec-projects">PROJ</a>
     <a href="#sec-publications" data-target="sec-publications">PUBS</a>
@@ -958,7 +966,7 @@ footer{
 
   <!-- WORK EXPERIENCE -->
   <div class="phrase collapsed" id="sec-work">
-    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">01</span> /WORK<span class="collapse-arrow">▾</span></div>
+    <div class="phrase-head" role="button" tabindex="0" aria-expanded="false"><span class="idx">01</span> /EXPERIENCE<span class="collapse-arrow">▾</span></div>
     <div class="phrase-body">
     <table class="tracker">
       <thead>
@@ -1644,7 +1652,7 @@ const SITE_DATA = {
     bpmStatEl.textContent = bpm;
     if(playing){
       clearInterval(playTimer);
-      playTimer = setInterval(stepPlayhead, 60000/bpm);
+      playTimer = setInterval(stepPlayhead, 60000/bpm/2);
     }
   }
   document.getElementById('bpmUp').addEventListener('click', ()=> setBpm(bpm+4));
@@ -1661,7 +1669,18 @@ const SITE_DATA = {
     rows.forEach(r=>r.classList.remove('playhead'));
     const row = rows[playIdx % rows.length];
     row.classList.add('playhead');
-    blip(parseFloat(row.getAttribute('data-note')) || 220);
+    const note = parseFloat(row.getAttribute('data-note')) || 220;
+    blip(note);
+
+    // occasional 1/32-note retrigger burst on a random step, for extra sequencer variability
+    if(Math.random() < 0.18){
+      const retrigMs = 60000/bpm/8; // 1/32 note spacing
+      const hits = 2 + Math.floor(Math.random()*3); // 2-4 extra hits
+      for(let i=1;i<=hits;i++){
+        setTimeout(()=> blip(note), retrigMs*i);
+      }
+    }
+
     playIdx++;
   }
 
@@ -1672,7 +1691,7 @@ const SITE_DATA = {
     if(playing){
       playBtn.textContent = '■ STOP';
       stepPlayhead();
-      playTimer = setInterval(stepPlayhead, 60000/bpm);
+      playTimer = setInterval(stepPlayhead, 60000/bpm/2);
     } else {
       playBtn.textContent = '▶ PLAY';
       clearInterval(playTimer);
