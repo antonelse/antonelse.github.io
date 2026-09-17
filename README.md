@@ -54,9 +54,11 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - `AWARDS.period`: year only (no month) for consistency with other sections.
 
 **CONTACTS is the one exception** — it's not in `SITE_DATA`, just plain
-`.contact-line` markup near the end of the `<body>`. To add/remove a
-contact, copy/edit a line there directly, and also update `sameAs` in the
-`ld+json` structured-data block near the top (same links, helps SEO).
+`.contact-line` markup near the end of the `<body>`, grouped into three
+`.contact-group` blocks (MUSIC / PROFESSIONAL / SOCIAL) inside a
+`.contact-groups` grid. To add/remove a contact, copy/edit a line inside the
+right group directly, and also update `sameAs` in the `ld+json`
+structured-data block near the top (same links, helps SEO).
 
 ## Open loose ends
 
@@ -72,10 +74,13 @@ contact, copy/edit a line there directly, and also update `sameAs` in the
 - **Navmenu**: all sections start collapsed; the active link tracks a fixed
   reference line near the top of the viewport as you scroll (not a plain
   visibility check, so it stays correct even when sections have very
-  different heights). On wide screens (≥1320px) it becomes a sidebar fixed
-  to the left of the content, with EDUCATION/PROJECTS/PUBLICATIONS/AWARDS/
-  INFLUENCES/CONTACTS shown as the shortened EDU/PROJ/PUBS/AWRD/INFL/CNTCT
-  to fit — section headers stay full-length everywhere.
+  different heights). Each link has a small inline pixel icon before its
+  label (`.nav-ico`, plain SVG, same `currentColor`/crisp-edges style as the
+  favicon bitmaps). On wide screens (≥1320px) it becomes a 108px-wide
+  sidebar fixed to the left of the content, with EDUCATION/PROJECTS/
+  PUBLICATIONS/AWARDS/INFLUENCES/CONTACTS shown as the shortened
+  EDU/PROJ/PUBS/AWRD/INFL/CNTCT to fit — section headers stay full-length
+  everywhere.
 - **⌃⌄ ALL** expands every section on the first click, collapses on the
   second (click a section header to toggle just that one).
 - **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
