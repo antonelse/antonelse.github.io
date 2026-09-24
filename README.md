@@ -97,8 +97,15 @@ jump link in `<nav class="crate-nav">`; to add an entry, copy an
   PUBLICATIONS/AWARDS/INFLUENCES/CONTACTS shown as the shortened
   EDU/PROJ/PUBS/AWRD/INFL/CNTCT to fit — section headers stay full-length
   everywhere.
-- **⌃⌄ ALL** expands every section on the first click, collapses on the
-  second (click a section header to toggle just that one).
+- **⌃⌄ ALL** (topbar chip, next to MENU) expands every section on the first
+  click, collapses on the second (click a section header to toggle just
+  that one).
+- **Topbar** is one row on desktop; below ~900px it splits into two rows
+  (MENU/ALL and theme/CRT/REC share a row, PLAY/MUTE gets its own), and
+  below ~360px into three (each zone on its own row) — narrower than that
+  and the two shared-row groups genuinely don't fit side by side. The BPM
+  +/− adjuster is desktop-only below 900px; the current value still shows
+  in the STATS card either way, just not editable from the topbar.
 - **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
   ratio; phase drifts slowly on its own for extra shape variety. Link to a
   short explainer sits under the canvas.

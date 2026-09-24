@@ -260,19 +260,20 @@ details.crate[open] summary.phrase-head::after{
 }
 .crate-item:last-child{ border-bottom: none; }
 .crate-item .head{
-  display:flex;
-  align-items:baseline;
-  gap:8px;
-  flex-wrap:wrap;
+  display:block;
 }
 .crate-item .head a{
+  display:block;
   font-weight: bold;
   color: var(--lcd-bright);
+  font-size: 15px;
   text-decoration: none;
 }
 .crate-item .head .author{
+  display:block;
   color: var(--lcd-dim);
   font-size: 13px;
+  margin-top: 2px;
 }
 .crate-item .head a:hover{ text-decoration: underline; }
 .crate-item .new-tag{

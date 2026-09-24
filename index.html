@@ -203,7 +203,7 @@ body::after{
 }
 .topbar-controls{
   display:grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items:center;
   width:100%;
   gap:10px;
@@ -350,7 +350,7 @@ body::after{
   box-shadow: 0 10px 24px rgba(0,0,0,0.5);
 }
 .navtrigger.open .nav-dropdown{ display:flex; }
-.nav-dropdown a, .nav-dropdown .nav-action{
+.nav-dropdown a{
   display:flex;
   align-items:center;
   gap:8px;
@@ -369,8 +369,8 @@ body::after{
   white-space:nowrap;
   text-align:left;
 }
-.nav-dropdown a:last-child, .nav-dropdown .nav-action:last-child{ border-bottom:none; }
-.nav-dropdown a:hover, .nav-dropdown .nav-action:hover{
+.nav-dropdown a:last-child{ border-bottom:none; }
+.nav-dropdown a:hover{
   color: var(--lcd-bright);
   background: var(--grid);
 }
@@ -378,18 +378,11 @@ body::after{
   color: var(--bg);
   background: var(--lcd);
 }
-.nav-dropdown .nav-action.is-active{
-  color: var(--bg);
-  background: var(--lcd);
-}
-.nav-dropdown-divider{
-  border-top: 1px solid var(--lcd-dim);
-  margin: 2px 0;
-}
 .nav-ico{ width:14px; height:14px; flex-shrink:0; }
 .nav-ico svg{ width:100%; height:100%; display:block; }
-.nav-action .nav-ico svg{ transition: transform 0.15s; }
-.nav-action.is-active .nav-ico svg{ transform: rotate(180deg); }
+.tb-collapse-all{ display:inline-flex; align-items:center; gap:5px; }
+.tb-collapse-all .nav-ico svg{ transition: transform 0.15s; }
+.tb-collapse-all.is-active .nav-ico svg{ transform: rotate(180deg); }
 .lj-formula{ text-align:center; margin-top:8px; font-size:13px; letter-spacing:1px; }
 .lj-link{ text-align:center; margin-top:6px; font-size:11px; letter-spacing:1px; opacity:.6; }
 
@@ -862,6 +855,16 @@ footer{
   color: var(--lcd-dim);
 }
 
+/* topbar: stack the three zones before the single-line layout has room
+   (narrower than this, "auto 1fr auto" starts wrapping mid-content) */
+@media (max-width:900px){
+  .topbar-controls{ grid-template-columns:1fr; row-gap:8px; }
+  .tb-zone-left, .tb-zone-center, .tb-zone-right{ justify-content:flex-start; }
+  /* BPM adjuster is desktop-only below this width: the heaviest chunk of
+     the center zone, and the value is still visible in the STATS card */
+  .tb-zone-center .tb-sep, .tb-bpm{ display:none; }
+}
+
 /* mobile */
 @media (max-width:640px){
   .screen{ padding: 12px 10px 40px; }
@@ -869,9 +872,14 @@ footer{
   .nav-dropdown{ min-width:160px; }
   .title-big{ font-size:22px; }
   .subtitle{ font-size:12px; }
-  .topbar{ font-size:11px; letter-spacing:1px; padding:8px 8px; }
-  .topbar-controls{ grid-template-columns:1fr; row-gap:8px !important; font-size:11px; }
+  .topbar{ font-size:11px; letter-spacing:0.5px; padding:8px 8px; }
+  .topbar-controls{ grid-template-columns:1fr; row-gap:6px !important; font-size:11px; }
   .tb-zone-left, .tb-zone-center, .tb-zone-right{ justify-content:flex-start; }
+  .tb-zone{ gap:6px; row-gap:6px; }
+  .tb-group{ gap:4px; }
+  .vu-meter{ display:none; }
+  .tb-bpm-val{ min-width:auto; padding:0 2px; }
+  .tb-sep{ margin:0 -2px; }
   .header{ padding:14px 12px; }
   .stats{ grid-template-columns: repeat(2,1fr); }
   .stat:nth-child(2){ border-right:none; }
@@ -922,12 +930,28 @@ footer{
   .contact-groups{ grid-template-columns: 1fr; gap:0; }
   .contact-group-head{ font-size:12px; }
   .nav-hamburger{ font-size:11px; padding:4px 8px; }
-  .nav-dropdown a, .nav-dropdown .nav-action{ font-size:11px; }
+  .nav-dropdown a{ font-size:11px; }
 }
 
 @media (max-width:640px){
   .topbar-controls span[id]{ padding: 2px 4px; }
   .wavetable-controls span[id]{ padding: 4px 6px; }
+}
+
+/* below 360px, left+right (MENU/ALL + theme/CRT/REC) no longer both fit on
+   one row at once — keep the plain 3-row stack from the block above.
+   From 360px up there's room to pair them and drop to 2 rows: left+right
+   share a row (auto-margin pushes right to the far end), center wraps
+   onto its own full-width row below. */
+@media (min-width:360px) and (max-width:900px){
+  .topbar-controls{
+    display:flex;
+    flex-wrap:wrap;
+    row-gap:8px;
+  }
+  .tb-zone-left{ order:1; }
+  .tb-zone-right{ order:2; margin-left:auto; justify-content:flex-end; }
+  .tb-zone-center{ order:3; flex-basis:100%; justify-content:flex-start; }
 }
 
 @media (max-width:400px){
@@ -1031,12 +1055,10 @@ footer{
             <a href="#sec-awards" data-target="sec-awards" role="menuitem"><span class="nav-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" shape-rendering="crispEdges"><polygon points="8,1 9.8,5.8 15,6 11,9.3 12.3,14.5 8,11.6 3.7,14.5 5,9.3 1,6 6.2,5.8"/></svg></span>AWRD</a>
             <a href="#sec-influences" data-target="sec-influences" role="menuitem"><span class="nav-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" shape-rendering="crispEdges"><polygon points="8,1 14,6 8,15 2,6"/><line x1="2" y1="6" x2="14" y2="6"/></svg></span>INFL</a>
             <a href="#sec-contact" data-target="sec-contact" role="menuitem"><span class="nav-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" shape-rendering="crispEdges"><rect x="1" y="3" width="14" height="10"/><path d="M1,3 l7,6 l7,-6"/></svg></span>CNTCT</a>
-            <div class="nav-dropdown-divider"></div>
-            <button type="button" id="collapseAllBtn" class="nav-action" role="menuitem" aria-pressed="false" title="Collapse/expand all sections">
-              <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" shape-rendering="crispEdges"><polyline points="4,6 8,2 12,6"/><polyline points="4,10 8,14 12,10"/></svg></span>
-              <span class="collapse-label">EXPAND ALL</span>
-            </button>
           </nav>
+        </span>
+        <span id="collapseAllBtn" class="tb-btn tb-collapse-all" role="button" tabindex="0" aria-pressed="false" title="Collapse/expand all sections">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" shape-rendering="crispEdges"><polyline points="4,6 8,2 12,6"/><polyline points="4,10 8,14 12,10"/></svg></span><span class="collapse-label">ALL</span>
         </span>
       </span>
 
@@ -2374,7 +2396,6 @@ const SITE_DATA = {
         collapseAllBtn.classList.toggle('is-active', allCollapsed);
         collapseAllBtn.setAttribute('aria-pressed', String(allCollapsed));
         collapseAllBtn.title = allCollapsed ? 'Expand all sections' : 'Collapse all sections';
-        collapseAllBtn.querySelector('.collapse-label').textContent = allCollapsed ? 'EXPAND ALL' : 'COLLAPSE ALL';
         // canvases (lissajous etc) init to 0-size while hidden; force a re-layout
         setTimeout(()=> window.dispatchEvent(new Event('resize')), 10);
         const trig = document.getElementById('navTrigger');
