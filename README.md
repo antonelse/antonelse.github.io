@@ -1,9 +1,9 @@
 # antonelse portfolio — deploy instructions
 
 Single-file site: everything is in `index.html` (fonts, favicon, avatar images
-embedded as base64). No build step, no dependencies. `attribution.html` and
-`privacy.html` are separate standalone pages that share the same embedded
-fonts/theme.
+embedded as base64). No build step, no dependencies. `attribution.html`,
+`privacy.html` and `crates.html` are separate standalone pages that share the
+same embedded fonts/theme.
 
 ## Deploy on GitHub Pages
 
@@ -11,7 +11,8 @@ fonts/theme.
    domain `https://antonelse.github.io/`; any other name works, just lives at
    `.../<repo-name>/` instead).
 2. Push these files to the repo root: `index.html`, `og-image.png`,
-   `robots.txt`, `sitemap.xml`, `attribution.html`, `privacy.html`.
+   `robots.txt`, `sitemap.xml`, `attribution.html`, `privacy.html`,
+   `crates.html`.
 3. **Settings → Pages → Source**: Deploy from a branch, `main`, `/ (root)`.
 4. Live in a minute or two, at the URL GitHub shows you.
 
@@ -60,6 +61,21 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 right group directly, and also update `sameAs` in the `ld+json`
 structured-data block near the top (same links, helps SEO).
 
+## Crates page (`crates.html`)
+
+A separate standalone page (same pattern as `attribution.html` /
+`privacy.html`) for running, open-ended lists — things that get added to
+over time rather than a dated post. Linked from two places: `index.html`'s
+footer, and a regular card in `INFLUENCES` (`SITE_DATA.INFLUENCES.CRATES`,
+one entry, `linkUrl: "crates.html"` — edit like any other INFLUENCES entry).
+
+The page itself is **not** SITE_DATA-driven: each entry is a plain
+`<li class="crate-item">` written directly in the `<ul class="crate-list">`
+markup, grouped under a `<details class="crate">` per topic. To add a new
+topic, copy a `<details>` block, give it a unique `id`, and add a matching
+jump link in `<nav class="crate-nav">`; to add an entry, copy an
+`<li class="crate-item">` inside the relevant list.
+
 ## Open loose ends
 
 - **PROJECTS → SOFTWARE → Analog Shutterino**, and **VIDEO → METRO / Ozne
@@ -86,17 +102,13 @@ structured-data block near the top (same links, helps SEO).
 - **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
   ratio; phase drifts slowly on its own for extra shape variety. Link to a
   short explainer sits under the canvas.
-- **Custom cursor**: on desktop (mouse + hover), the native pointer is
-  hidden everywhere and replaced with a small 8-bit triangle that follows
-  the mouse, spins slowly in fake-3D and bobs; it renders under the CRT
-  overlay so it's affected by the scanlines/vignette like the rest of the
-  page. Off on touch devices, where the native pointer is untouched.
 - After ~60s idle, an ASCII tunnel screensaver kicks in; any input dismisses it.
 - Top bar **MUTE/SOUND** and **REC ■** aren't what they look like: sound is
   off by default and just adds synth blips on hover, REC is purely decorative
   (no actual recording).
 - Footer **"SAVE & EXIT"** is an easter egg (ASCII logo + typed message).
-  Next to it, **Attribution** and **Privacy** link to their standalone pages.
+  Next to it, **Attribution**, **Privacy** and **Crates** link to their
+  standalone pages.
 - Title ("ANTONIO GIGANTI") is `contenteditable` and self-heals: edit or
   clear it, wait 1.8s after you stop, it retypes the real name (rebuilds
   stripped `<span>`s if needed). Native caret is hidden here (iOS renders it
@@ -110,6 +122,7 @@ structured-data block near the top (same links, helps SEO).
 | `index.html` | Entire site — HTML, CSS, JS, fonts, favicon, avatar images |
 | `attribution.html` | Credits page — fonts owed (license requirement) + inspiration links |
 | `privacy.html` | Privacy policy — plain description of what the site does/doesn't collect |
+| `crates.html` | Running, open-ended lists (not SITE_DATA-driven, see "Crates page" above) |
 | `og-image.png` | Social preview image (LinkedIn, Twitter, Slack, etc.) |
 | `robots.txt` | Search engine indexing permissions |
 | `sitemap.xml` | Search engine discovery — update URL if using a custom domain |

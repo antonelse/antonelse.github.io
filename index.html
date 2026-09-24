@@ -399,7 +399,7 @@ body::after{
   margin-top: 14px;
   padding: 18px 16px;
   position:relative;
-  box-shadow: 0 0 20px rgba(157,255,107,0.15) inset;
+  box-shadow: 0 0 20px rgba(255,255,255,0.15) inset;
 }
 .rowlabel{
   font-family: var(--font-display);
@@ -426,7 +426,11 @@ body::after{
      everywhere for a consistent look across platforms. */
   caret-color: transparent;
   cursor: text;
-  text-shadow: 0 0 8px rgba(157,255,107,0.6);
+  animation: glowPulse 3.2s ease-in-out infinite;
+}
+@keyframes glowPulse{
+  0%, 100%{ text-shadow: 0 0 6px rgba(255,255,255,0.25), 0 0 2px rgba(200,200,200,0.2); }
+  50%{ text-shadow: 0 0 14px rgba(255,255,255,0.85), 0 0 4px rgba(255,255,255,0.5); }
 }
 .title-big:focus-visible{
   outline: none;
@@ -517,7 +521,7 @@ body::after{
   transition: box-shadow 0.1s;
 }
 .phrase-head:hover{
-  box-shadow: 0 0 14px rgba(157,255,107,0.35);
+  box-shadow: 0 0 14px rgba(255,255,255,0.35);
 }
 .phrase-head:focus-visible,
 .collapse-header:focus-visible{
@@ -573,7 +577,7 @@ body::after{
 }
 .tracker td{
   padding: 10px 8px;
-  border-bottom: 1px solid rgba(157,255,107,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
   vertical-align:top;
 }
 .tracker tr:hover td{
@@ -633,7 +637,7 @@ body::after{
 }
 .sample:hover{
   border-color: var(--lcd-bright);
-  box-shadow: 0 0 14px rgba(157,255,107,0.35);
+  box-shadow: 0 0 14px rgba(255,255,255,0.35);
 }
 .sample-head{
   display:flex;
@@ -691,33 +695,59 @@ body::after{
 }
 .samples.list-view{
   display:block;
+  border-top:1px solid var(--lcd-dim);
 }
 .samples.list-view .sample{
   display:flex;
   align-items:center;
-  flex-wrap:wrap;
-  gap:4px 14px;
-  padding:8px 12px;
-  border-left:none;
-  border-right:none;
-  border-top:none;
-  margin-bottom:-1px;
+  flex-wrap:nowrap;
+  gap:16px;
+  padding:11px 6px;
+  border:none;
+  border-bottom:1px solid var(--lcd-dim);
+  margin:0;
+  background:transparent;
+}
+.samples.list-view .sample:hover{
+  background: var(--bg2);
+  box-shadow: none;
 }
 .samples.list-view .sample-head{
   flex-direction:row;
+  align-items:baseline;
   gap:8px;
   margin:0;
   order:1;
-  flex:0 0 auto;
+  flex:0 0 128px;
+  min-width:0;
+  font-family: var(--font-display);
+  font-size:10px;
+  letter-spacing:0.5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.samples.list-view .sample-head span:first-child{
+  color: var(--lcd-bright);
 }
 .samples.list-view .sample-head span:last-child{
   color: var(--lcd-dim);
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .samples.list-view .sample-title{
   margin:0;
+  font-family: var(--font-body);
+  font-weight:600;
   font-size:14px;
+  letter-spacing:0;
+  color: var(--lcd-bright);
   order:2;
-  flex:1 1 160px;
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .samples.list-view .sample-desc,
 .samples.list-view .sample-tags{
@@ -727,6 +757,11 @@ body::after{
   margin:0;
   order:3;
   flex:0 0 auto;
+  white-space:nowrap;
+}
+.samples.list-view .sample-link a{
+  font-family: var(--font-body);
+  font-size:12px;
 }
 .bc-frame{
   border: 1px solid var(--lcd-dim);
@@ -746,7 +781,7 @@ body::after{
 .bc-grid .bc-frame{ margin-bottom: 0; }
 .bc-frame:hover{
   border-color: var(--lcd-bright);
-  box-shadow: 0 0 14px rgba(157,255,107,0.25);
+  box-shadow: 0 0 14px rgba(255,255,255,0.25);
 }
 .bc-frame .bc-label{
   font-size: 10px;
@@ -788,7 +823,7 @@ body::after{
 }
 .contact:hover{
   border-color: var(--lcd-bright);
-  box-shadow: 0 0 14px rgba(157,255,107,0.35);
+  box-shadow: 0 0 14px rgba(255,255,255,0.35);
 }
 .contact .phrase-body{
   padding: 0 16px 16px;
@@ -859,6 +894,28 @@ footer{
   .sample-desc{ font-size:11px; line-height:1.4; }
   .tag{ font-size:8px; padding:2px 5px; }
   .sample a{ font-size:10px; }
+  .samples.list-view .sample{
+    flex-wrap: wrap;
+    row-gap:4px;
+    align-items:baseline;
+    padding:10px 6px;
+  }
+  .samples.list-view .sample-head{
+    order:1;
+    flex:0 1 96px;
+    min-width:0;
+    font-size:9px;
+  }
+  .samples.list-view .sample-link{
+    order:2;
+    margin-left:auto;
+    padding-left:8px;
+  }
+  .samples.list-view .sample-title{
+    order:3;
+    flex:1 1 100%;
+    font-size:13px;
+  }
   .bc-grid{ grid-template-columns: 1fr; }
   .contact-line{ flex-direction:column; gap:2px; font-size:12px; }
   .contact-line .lbl{ width:auto; }
@@ -1231,6 +1288,10 @@ footer{
       <div class="samples" id="infWishingSamples">
       </div>
 
+      <div class="subsection-head" id="sec-influences-crates">CRATES</div>
+      <div class="samples" id="infCratesSamples">
+      </div>
+
     </div>
   </div>
 
@@ -1267,18 +1328,18 @@ footer{
   <footer>
     Antonio Giganti - antonelse © 2026 · <span id="saveExitBtn" style="cursor:pointer; text-decoration:underline; user-select:none;">Save &amp; Exit</span>
     <br>Last modified: <span id="lastModified"></span> UTC
-    <br><a href="attribution.html" style="color:inherit;">Attribution</a> · <a href="privacy.html" style="color:inherit;">Privacy</a>
+    <br><a href="attribution.html" style="color:inherit;">Attribution</a> · <a href="privacy.html" style="color:inherit;">Privacy</a> · <a href="crates.html" style="color:inherit;">Crates</a>
     <br><a href="https://github.com/antonelse/antonelse.github.io" target="_blank" rel="noopener" style="color:inherit;">source on GitHub</a>
   </footer>
 
   <div id="exitOverlay" style="display:none; position:fixed; inset:0; z-index:100; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; cursor:pointer;">
-    <pre id="asciiLogo" style="font-family:'Courier New',monospace; color:var(--lcd-bright); font-size:10px; line-height:1.1; text-align:center; margin:0; white-space:pre; text-shadow:0 0 8px rgba(157,255,107,0.5);"></pre>
+    <pre id="asciiLogo" style="font-family:'Courier New',monospace; color:var(--lcd-bright); font-size:10px; line-height:1.1; text-align:center; margin:0; white-space:pre; text-shadow:0 0 8px rgba(255,255,255,0.5);"></pre>
     <pre id="exitTyping" style="font-family:'Elektron','Courier New',monospace; color:var(--lcd); font-size:13px; line-height:1.5; text-align:center; margin:20px 0 0; white-space:pre-wrap; min-height:3em;"></pre>
     <div style="margin-top:20px; font-size:12px; color:var(--lcd-dim); letter-spacing:2px;">— click anywhere to return —</div>
   </div>
 
   <div id="screensaverOverlay" style="display:none; position:fixed; inset:0; z-index:99; background:#000; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;">
-    <pre id="tunnelAscii" style="font-family:'Courier New',monospace; color:#ffffff; font-size:9px; line-height:0.9; text-align:center; margin:0; white-space:pre; text-shadow:0 0 6px rgba(157,255,107,0.4);"></pre>
+    <pre id="tunnelAscii" style="font-family:'Courier New',monospace; color:#ffffff; font-size:9px; line-height:0.9; text-align:center; margin:0; white-space:pre; text-shadow:0 0 6px rgba(255,255,255,0.4);"></pre>
   </div>
 
 </div>
@@ -1530,6 +1591,12 @@ const SITE_DATA = {
         desc: "Vinyl I'm hunting for — the kind of pressings that reward patience and a good needle",
         linkText: "→ view wantlist on Discogs", linkUrl: "https://www.discogs.com/wantlist?user=antonelse" },
     ],
+
+    CRATES: [
+      { code: "CRATES", meta: "antonelse.github.io", title: "Crates",
+        desc: "Short write-ups, running lists and odds and ends, blog-style — whatever I'm digging through, curious about or want to remember, added to whenever something new comes up",
+        linkText: "→ browse the crates", linkUrl: "crates.html" },
+    ],
   },
 };
 
@@ -1546,13 +1613,11 @@ const SITE_DATA = {
     const tbody = document.getElementById(tbodyId);
     if(!tbody) return;
     tbody.innerHTML = rows.map((r, i) => {
-      const roleHtml = r.url
-        ? `<a href="${r.url}" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">${r.role}</a>`
-        : r.role;
       const noteAttr = r.note != null ? ` data-note="${r.note}"` : '';
-      return `<tr${noteAttr}>
+      const linkAttr = r.url ? ` data-link="${r.url}"` : '';
+      return `<tr${noteAttr}${linkAttr}>
           <td class="step-num">${String(i).padStart(2, '0')}</td>
-          <td><span class="role">${roleHtml}</span><br><span class="org">${r.org}</span></td>
+          <td><span class="role">${r.role}</span><br><span class="org">${r.org}</span></td>
           <td class="period">${r.period}</td>
           <td class="desc">${r.desc}</td>
         </tr>`;
@@ -1595,6 +1660,7 @@ const SITE_DATA = {
   renderSampleCards('infWatchingSamples', SITE_DATA.INFLUENCES.WATCHING);
   renderSampleCards('infListeningSamples', SITE_DATA.INFLUENCES.LISTENING);
   renderSampleCards('infWishingSamples', SITE_DATA.INFLUENCES.WISHING);
+  renderSampleCards('infCratesSamples', SITE_DATA.INFLUENCES.CRATES);
 })();
 (function(){
   // ---- Web Audio: simple 8-bit square wave blip ----
@@ -1916,8 +1982,8 @@ const SITE_DATA = {
     let t = 0;
 
     // mouse-reactive frequency ratios (a:b) driven by X/Y position only, eased
-    let targetFreqA = 3, targetFreqB = 4;
-    let freqA = 3, freqB = 4;
+    let targetFreqA = 1.50, targetFreqB = 6.20;
+    let freqA = 1.50, freqB = 6.20;
     let phaseClock = 0; // slowly oscillates the phase offset for extra shape variety
 
     const freqXEl = document.getElementById('freqXVal');
@@ -1931,22 +1997,22 @@ const SITE_DATA = {
       targetFreqB = 1 + ny * 7;      // 1..8, continuous
     }
     canvas.addEventListener('mousemove', (e)=> updateFromPointer(e.clientX, e.clientY));
-    canvas.addEventListener('mouseleave', ()=>{ targetFreqA = 3; targetFreqB = 4; });
+    canvas.addEventListener('mouseleave', ()=>{ targetFreqA = 1.50; targetFreqB = 6.20; });
     canvas.addEventListener('touchmove', (e)=>{
       if(e.touches && e.touches[0]){
         updateFromPointer(e.touches[0].clientX, e.touches[0].clientY);
         e.preventDefault();
       }
     }, {passive:false});
-    canvas.addEventListener('touchend', ()=>{ targetFreqA = 3; targetFreqB = 4; });
+    canvas.addEventListener('touchend', ()=>{ targetFreqA = 1.50; targetFreqB = 6.20; });
 
     function getLcdColor(){
       const cs = getComputedStyle(document.body);
-      return cs.getPropertyValue('--lcd').trim() || '#9dff6b';
+      return cs.getPropertyValue('--lcd').trim() || '#d8d8d8';
     }
     function getBrightColor(){
       const cs = getComputedStyle(document.body);
-      return cs.getPropertyValue('--lcd-bright').trim() || '#d4ffb0';
+      return cs.getPropertyValue('--lcd-bright').trim() || '#ffffff';
     }
     function quant(v, step){ return Math.round(v/step)*step; }
 
