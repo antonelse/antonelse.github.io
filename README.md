@@ -12,7 +12,7 @@ same embedded fonts/theme.
    `.../<repo-name>/` instead).
 2. Push these files to the repo root: `index.html`, `og-image.png`,
    `robots.txt`, `sitemap.xml`, `attribution.html`, `privacy.html`,
-   `crates.html`.
+   `crates.html`, `antonio_giganti_cv_2026.pdf` (the CV download button in the About section links to it).
 3. **Settings → Pages → Source**: Deploy from a branch, `main`, `/ (root)`.
 4. Live in a minute or two, at the URL GitHub shows you.
 
@@ -54,19 +54,13 @@ builds tables/cards from them automatically. **No HTML to write or copy.**
 - `desc`: escape `"` as `\"` (it's a JS string, not raw HTML).
 - `AWARDS.period`: year only (no month) for consistency with other sections.
 
-**CONTACTS is the one exception** — it's not in `SITE_DATA`, just plain
-`.contact-line` markup near the end of the `<body>`, grouped into three
-`.contact-group` blocks (MUSIC / PROFESSIONAL / SOCIAL) inside a
-`.contact-groups` grid. To add/remove a contact, copy/edit a line inside the
-right group directly, and also update `sameAs` in the `ld+json`
-structured-data block near the top (same links, helps SEO).
+**CONTACTS is the one exception** — it's not in `SITE_DATA`. It is a boxed `.contact` block near the end of the `<body>`, containing a single `.contact-line` with the email. Edit that line directly.
 
 ## Crates page (`crates.html`)
 
 A separate standalone page (same pattern as `attribution.html` /
 `privacy.html`) for running, open-ended lists — things that get added to
-over time rather than a dated post. Linked from two places: `index.html`'s
-footer, and a regular card in `INFLUENCES` (`SITE_DATA.INFLUENCES.CRATES`,
+over time rather than a dated post. Linked from the DIGGING card in `INFLUENCES` (`SITE_DATA.INFLUENCES.DIGGING`,
 one entry, `linkUrl: "crates.html"` — edit like any other INFLUENCES entry).
 
 The page itself is **not** SITE_DATA-driven: each entry is a plain
@@ -80,10 +74,6 @@ jump link in `<nav class="crate-nav">`; to add an entry, copy an
 
 - **PROJECTS → SOFTWARE → Analog Shutterino**, and **VIDEO → METRO / Ozne
   Production**: `linkUrl: "#"`, no public link yet — update in `SITE_DATA`.
-- **INFLUENCES → READING**: not yet in `SITE_DATA` (nothing to show). Once
-  populated: add `READING: [...]` under `SITE_DATA.INFLUENCES` (same shape
-  as `WATCHING`), give its `.samples` div `id="infReadingSamples"`, and call
-  `renderSampleCards('infReadingSamples', SITE_DATA.INFLUENCES.READING)`.
 
 ## Page behavior, good to know
 
@@ -107,15 +97,13 @@ jump link in `<nav class="crate-nav">`; to add an entry, copy an
   +/− adjuster is desktop-only below 900px; the current value still shows
   in the STATS card either way, just not editable from the topbar.
 - **Lissajous** (`LJ`): drag the mouse over the canvas to change the a:b
-  ratio; phase drifts slowly on its own for extra shape variety. Link to a
-  short explainer sits under the canvas.
-- After ~60s idle, an ASCII tunnel screensaver kicks in; any input dismisses it.
+  ratio; phase drifts slowly on its own for extra shape variety. - After ~60s idle, an ASCII tunnel screensaver kicks in; any input dismisses it.
 - Top bar **MUTE/SOUND** and **REC ■** aren't what they look like: sound is
   off by default and just adds synth blips on hover, REC is purely decorative
   (no actual recording).
 - Footer **"SAVE & EXIT"** is an easter egg (ASCII logo + typed message).
-  Next to it, **Attribution**, **Privacy** and **Crates** link to their
-  standalone pages.
+  Next to it, **Attribution**, **Privacy** and **CV** link to their
+  standalone files/pages.
 - Title ("ANTONIO GIGANTI") is `contenteditable` and self-heals: edit or
   clear it, wait 1.8s after you stop, it retypes the real name (rebuilds
   stripped `<span>`s if needed). Native caret is hidden here (iOS renders it

@@ -37,23 +37,19 @@
   "jobTitle": "AI & Audio Engineer",
   "url": "https://antonelse.github.io/",
   "image": "https://antonelse.github.io/og-image.png",
-  "address": { "@type": "PostalAddress", "addressLocality": "Milan", "addressCountry": "IT" },
-  "worksFor": { "@type": "Organization", "name": "Musixmatch" },
-  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Politecnico di Milano" },
-  "sameAs": [
-    "https://github.com/antonelse",
-    "https://www.linkedin.com/in/antoniogiganti/",
-    "https://orcid.org/0000-0003-4052-5138",
-    "https://antonelse.bandcamp.com/",
-    "https://soundcloud.com/antonelse",
-    "https://www.mixcloud.com/antonelse/",
-    "https://hearthis.at/antonelse/",
-    "https://www.instagram.com/antonelse.exe/",
-    "https://bsky.app/profile/antonelse.bsky.social",
-    "https://mastodon.social/@antonelse",
-    "https://www.behance.net/antonelse",
-    "https://www.discogs.com/user/AntonElse"
-  ]
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Milan",
+    "addressCountry": "IT"
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Musixmatch"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Politecnico di Milano"
+  }
 }
 </script>
 
@@ -144,7 +140,7 @@ html,body{
   color: var(--lcd);
   font-family: var(--font-body);
   letter-spacing: 0;
-  overflow-x:hidden;
+  overflow-x: clip;
 }
 
 /* CRT scanlines + pixel mask + vignette */
@@ -188,6 +184,9 @@ body::after{
 
 /* ===== TOP BAR ===== */
 .topbar{
+  position: sticky;
+  top: 0;
+  z-index: 60;
   display:flex;
   justify-content:flex-start;
   align-items:center;
@@ -384,7 +383,6 @@ body::after{
 .tb-collapse-all .nav-ico svg{ transition: transform 0.15s; }
 .tb-collapse-all.is-active .nav-ico svg{ transform: rotate(180deg); }
 .lj-formula{ text-align:center; margin-top:8px; font-size:13px; letter-spacing:1px; }
-.lj-link{ text-align:center; margin-top:6px; font-size:11px; letter-spacing:1px; opacity:.6; }
 
 /* ===== HEADER / SONG NAME ===== */
 .header{
@@ -531,23 +529,14 @@ body::after{
   transition: transform 0.15s;
   font-size:12px;
 }
-.phrase.collapsed .collapse-arrow,
-.contact.collapsed .collapse-arrow{
+.phrase.collapsed .collapse-arrow{
   transform: rotate(-90deg);
 }
 .phrase-body{
   overflow:hidden;
 }
-.phrase.collapsed .phrase-body,
-.contact.collapsed .phrase-body{
+.phrase.collapsed .phrase-body{
   display:none;
-}
-.contact .collapse-header{
-  display:flex;
-  align-items:center;
-  cursor:pointer;
-  user-select:none;
-  padding: 6px 16px;
 }
 
 /* ===== TRACKER TABLE ===== */
@@ -568,13 +557,13 @@ body::after{
   padding: 6px 8px;
   border-bottom: 1px solid var(--lcd-dim);
 }
+.tracker tr[data-link]:hover td{
+  background: var(--grid);
+}
 .tracker td{
   padding: 10px 8px;
   border-bottom: 1px solid rgba(255,255,255,0.12);
   vertical-align:top;
-}
-.tracker tr:hover td{
-  background: var(--grid);
 }
 .tracker tbody tr{
   cursor:pointer;
@@ -810,17 +799,16 @@ body::after{
 
 /* ===== CONTACT / OUTPUT ROUTING ===== */
 .contact{
-  margin-top: 30px;
+  margin: 30px auto 0;
+  max-width: 640px;
+  padding: 12px 16px 14px;
   border: 2px solid var(--lcd);
   transition: box-shadow 0.1s, border-color 0.1s;
 }
-.contact:hover{
-  border-color: var(--lcd-bright);
-  box-shadow: 0 0 14px rgba(255,255,255,0.35);
-}
 .contact .phrase-body{
-  padding: 0 16px 16px;
+  padding: 6px 0 0;
 }
+.contact .contact-line .lbl{ width: 72px; }
 .contact-line{
   display:flex;
   gap:10px;
@@ -831,22 +819,6 @@ body::after{
 .contact-line a{ color: var(--lcd-bright); text-decoration:none; }
 .contact-line a:hover{ text-decoration:underline; }
 
-.contact-groups{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0 24px;
-}
-.contact-group-head{
-  font-family: var(--font-display);
-  font-size:13px;
-  letter-spacing:2px;
-  color: var(--lcd-bright);
-  border-bottom: 1px solid var(--lcd-dim);
-  padding-bottom:5px;
-  margin: 0 0 2px;
-}
-.contact-groups .contact-line{ flex-direction:column; gap:2px; }
-.contact-groups .contact-line .lbl{ width:auto; font-size:11px; }
 
 footer{
   text-align:center;
@@ -888,7 +860,6 @@ footer{
   .phrase-head{ font-size:11px; padding:4px 8px; }
   #wavetable{ height:150px !important; }
   .lj-formula{ font-size:11px; }
-  .lj-link{ font-size:10px; }
   .bc-frame iframe{ height:165px !important; max-width:100% !important; }
   .wavetable-controls, .phrase div[style*="justify-content:center"]{ flex-wrap: wrap; gap:8px !important; }
   .tracker{ font-size:11px; }
@@ -927,15 +898,12 @@ footer{
   .bc-grid{ grid-template-columns: 1fr; }
   .contact-line{ flex-direction:column; gap:2px; font-size:12px; }
   .contact-line .lbl{ width:auto; }
-  .contact-groups{ grid-template-columns: 1fr; gap:0; }
-  .contact-group-head{ font-size:12px; }
   .nav-hamburger{ font-size:11px; padding:4px 8px; }
   .nav-dropdown a{ font-size:11px; }
 }
 
 @media (max-width:640px){
   .topbar-controls span[id]{ padding: 2px 4px; }
-  .wavetable-controls span[id]{ padding: 4px 6px; }
 }
 
 /* below 360px, left+right (MENU/ALL + theme/CRT/REC) no longer both fit on
@@ -1027,11 +995,11 @@ footer{
 <div id="cursor8bit" aria-hidden="true">
   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
     <!-- white outline, drawn full-size first -->
-    <polygon fill="#fff" points="8.2,20.9 8.2,4.9 19.8,16.5 13,16.5 12.6,16.6"/>
-    <polygon fill="#fff" points="17.3,21.6 13.7,23.1 9,12 12.7,10.5"/>
+    <polygon style="fill:var(--lcd-bright)" points="8.2,20.9 8.2,4.9 19.8,16.5 13,16.5 12.6,16.6"/>
+    <polygon style="fill:var(--lcd-bright)" points="17.3,21.6 13.7,23.1 9,12 12.7,10.5"/>
     <!-- black body, drawn inset on top so a 1px white rim shows around it -->
-    <rect fill="#000" x="12.5" y="13.6" transform="matrix(0.9221 -0.3871 0.3871 0.9221 -5.7605 6.5909)" width="2" height="8"/>
-    <polygon fill="#000" points="9.2,7.3 9.2,18.5 12.2,15.6 12.6,15.5 17.4,15.5"/>
+    <rect style="fill:var(--bg)" x="12.5" y="13.6" transform="matrix(0.9221 -0.3871 0.3871 0.9221 -5.7605 6.5909)" width="2" height="8"/>
+    <polygon style="fill:var(--bg)" points="9.2,7.3 9.2,18.5 12.2,15.6 12.6,15.5 17.4,15.5"/>
   </svg>
 </div>
 <div class="screen">
@@ -1080,7 +1048,7 @@ footer{
 
       <span class="tb-zone tb-zone-right">
         <span class="tb-group">
-          <span id="themeBtn" class="tb-btn" role="button" tabindex="0" aria-pressed="false" aria-label="Switch color theme" title="Switch color theme">☀</span>
+          <span id="themeBtn" class="tb-btn" role="button" tabindex="0" aria-pressed="false" aria-label="Switch color theme" title="Switch color theme">☀ LIGHT</span>
           <span id="crtBtn" class="tb-btn is-active" role="button" tabindex="0" aria-pressed="true" title="Toggle CRT scanline effect">▦ CRT</span>
         </span>
         <span class="tb-sep">│</span>
@@ -1124,10 +1092,7 @@ footer{
     <div style="border:1px solid var(--lcd-dim); background:var(--bg2); padding:8px;">
       <canvas id="lissajous" style="width:100%; height:190px; display:block; cursor:crosshair;" aria-hidden="true"></canvas>
       <div class="lj-formula">
-        x(θ) = sin(<span id="freqXVal">3.0</span>θ + φ)&nbsp;&nbsp;&nbsp;y(θ) = sin(<span id="freqYVal">2.0</span>θ)
-      </div>
-      <div class="lj-link">
-        <a href="https://en.wikipedia.org/wiki/Lissajous_curve" target="_blank" rel="noopener" style="color:inherit;">what's a Lissajous curve? →</a>
+        x(θ) = sin(<span id="freqXVal">2.1</span>θ + φ)&nbsp;&nbsp;&nbsp;y(θ) = sin(<span id="freqYVal">6.5</span>θ)
       </div>
     </div>
     </div>
@@ -1289,17 +1254,12 @@ footer{
       <span class="view-toggle-btn" data-view="list" role="button" tabindex="0" aria-pressed="false">☰ LIST</span>
     </div>
 
-      <div class="subsection-head" id="sec-influences-reading">READING</div>
-      <div class="samples">
-        <div style="color:var(--lcd-dim); font-size:12px; letter-spacing:1px; padding:4px 0;">— COMING SOON —</div>
-      </div>
-
       <div class="subsection-head" id="sec-influences-coding">CODING</div>
       <div class="samples" id="infCodingSamples">
       </div>
 
-      <div class="subsection-head" id="sec-influences-watching">WATCHING</div>
-      <div class="samples" id="infWatchingSamples">
+      <div class="subsection-head" id="sec-influences-visualizing">VISUALIZING</div>
+      <div class="samples" id="infVisualizingSamples">
       </div>
 
       <div class="subsection-head" id="sec-influences-mixes">LISTENING</div>
@@ -1310,48 +1270,27 @@ footer{
       <div class="samples" id="infWishingSamples">
       </div>
 
-      <div class="subsection-head" id="sec-influences-crates">CRATES</div>
-      <div class="samples" id="infCratesSamples">
+      <div class="subsection-head" id="sec-influences-digging">DIGGING</div>
+      <div class="samples" id="infDiggingSamples">
       </div>
 
     </div>
   </div>
 
   <!-- CONTACT -->
-  <div class="contact collapsed" id="sec-contact">
-    <div class="rowlabel collapse-header" role="button" tabindex="0" aria-expanded="false"><span>/CONTACTS</span><span class="collapse-arrow">▾</span></div>
+  <div class="contact" id="sec-contact">
+    <div class="rowlabel"><span>/CONTACTS</span></div>
     <div class="phrase-body">
-    <div class="contact-groups">
-      <div class="contact-group">
-        <div class="contact-group-head">MUSIC</div>
-        <div class="contact-line"><span class="lbl">BANDCAMP</span><a href="https://antonelse.bandcamp.com/" target="_blank" rel="noopener">antonelse.bandcamp.com</a></div>
-        <div class="contact-line"><span class="lbl">SOUNDCLOUD</span><a href="https://soundcloud.com/antonelse" target="_blank" rel="noopener">soundcloud.com/antonelse</a></div>
-        <div class="contact-line"><span class="lbl">MIXCLOUD</span><a href="https://www.mixcloud.com/antonelse/" target="_blank" rel="noopener">mixcloud.com/antonelse</a></div>
-        <div class="contact-line"><span class="lbl">HEARTHIS.AT</span><a href="https://hearthis.at/antonelse/" target="_blank" rel="noopener">hearthis.at/antonelse</a></div>
-        <div class="contact-line"><span class="lbl">DISCOGS</span><a href="https://www.discogs.com/user/AntonElse" target="_blank" rel="noopener">discogs.com/user/AntonElse</a></div>
-      </div>
-      <div class="contact-group">
-        <div class="contact-group-head">PROFESSIONAL</div>
-        <div class="contact-line"><span class="lbl">GITHUB</span><a href="https://github.com/antonelse" target="_blank" rel="noopener">github.com/antonelse</a></div>
-        <div class="contact-line"><span class="lbl">LINKEDIN</span><a href="https://www.linkedin.com/in/antoniogiganti/" target="_blank" rel="noopener">linkedin.com/in/antoniogiganti</a></div>
-        <div class="contact-line"><span class="lbl">ORCID</span><a href="https://orcid.org/0000-0003-4052-5138" target="_blank" rel="noopener">orcid.org/0000-0003-4052-5138</a></div>
-        <div class="contact-line"><span class="lbl">BEHANCE</span><a href="https://www.behance.net/antonelse" target="_blank" rel="noopener">behance.net/antonelse</a></div>
-      </div>
-      <div class="contact-group">
-        <div class="contact-group-head">SOCIAL</div>
-        <div class="contact-line"><span class="lbl">INSTAGRAM</span><a href="https://www.instagram.com/antonelse.exe/" target="_blank" rel="noopener">@antonelse.exe</a></div>
-        <div class="contact-line"><span class="lbl">BLUESKY</span><a href="https://bsky.app/profile/antonelse.bsky.social" target="_blank" rel="noopener">@antonelse.bsky.social</a></div>
-        <div class="contact-line"><span class="lbl">MASTODON</span><a href="https://mastodon.social/@antonelse" target="_blank" rel="noopener">@antonelse@mastodon.social</a></div>
-      </div>
-    </div>
+    <div class="contact-line"><span class="lbl">MAIL</span><a href="mailto:antonelse@proton.me">antonelse@proton.me</a></div>
     </div>
   </div>
 
   <footer>
-    Antonio Giganti - antonelse © 2026 · <span id="saveExitBtn" style="cursor:pointer; text-decoration:underline; user-select:none;">Save &amp; Exit</span>
+    Antonio Giganti - antonelse © 2026
     <br>Last modified: <span id="lastModified"></span> UTC
-    <br><a href="attribution.html" style="color:inherit;">Attribution</a> · <a href="privacy.html" style="color:inherit;">Privacy</a> · <a href="crates.html" style="color:inherit;">Crates</a>
+    <br><a href="attribution.html" style="color:inherit;">Attribution</a> · <a href="privacy.html" style="color:inherit;">Privacy</a> · <a href="antonio_giganti_cv_2026.pdf" download style="color:inherit;">CV</a>
     <br><a href="https://github.com/antonelse/antonelse.github.io" target="_blank" rel="noopener" style="color:inherit;">source on GitHub</a>
+    <div style="text-align:center; margin-top:12px;"><span id="saveExitBtn" style="cursor:pointer; text-decoration:underline; user-select:none;">Save &amp; Exit</span></div>
   </footer>
 
   <div id="exitOverlay" style="display:none; position:fixed; inset:0; z-index:100; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; cursor:pointer;">
@@ -1394,7 +1333,7 @@ const SITE_DATA = {
 
   WORK: [
     { role: "Engineer", org: "Musixmatch", period: "2025-now", note: 220,
-      desc: "Design and develop lyrics and audio analysis tools — Sentinel (copyright detection) and the Transcription API, from concept to product" },
+      desc: "Design and develop lyrics and audio analysis tools — Fingerprint (Sentinel, copyright detection) and Transcription APIs" },
     { role: "Teaching Assistant", org: "Politecnico di Milano", period: "2024-2025", note: 210,
       desc: "M.Sc. course \"Computer Music: Languages and Systems\" — SuperCollider, JUCE, algorithmic composition, live coding. Co-examiner Spring 2024 & 2025" },
     { role: "Research Intern", org: "Arianet s.r.l", period: "2023-2024", note: 190,
@@ -1420,6 +1359,8 @@ const SITE_DATA = {
   ],
 
   EDUCATION: [
+    { role: "360 – Immersive Sound Masterclass", org: "Music Innovation Hub × SAE Institute Milano", period: "2026", note: 160,
+      desc: "Selected through a national open call (10 artists under 35). Intensive training in immersive sound production, live spatial performance and site-specific sound installation. Concluded with a group project presented at Linecheck Music Meeting & Festival." },
     { role: "Ph.D. in Information Technology", org: "Politecnico di Milano", period: "2021-2025", note: 150,
       desc: "Telecommunications Area. Supervisor: Prof. Paolo Bestagini. Graph-based forecasting, image super-resolution, multimedia signal processing, audio forensics" },
     { role: "M.Sc. in Music and Acoustic Engineering", org: "Politecnico di Milano", period: "2019-2021", note: 140,
@@ -1484,19 +1425,19 @@ const SITE_DATA = {
       { code: "SMPL_06", meta: "2026", title: "AnDrone.io", note: 300,
         desc: "A DIY drone synthesizer based on the Axoloti (now Ksoloti) DSP board — MIDI mappings, patches and build guide",
         tags: ["dsp", "midi", "hardware"],
-        linkText: "→ github.com/antonelse/MIDI-mappings-ae", linkUrl: "https://github.com/antonelse/MIDI-mappings-ae/blob/main/axoloti_drone-evolution_uc33e/GUIDE.md" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/antonelse/MIDI-mappings-ae/blob/main/axoloti_drone-evolution_uc33e/GUIDE.md" },
       { code: "SMPL_05", meta: "2022–25", title: "Super-Resolution of BVOC Emissions", note: 330,
         desc: "Official repository of PhD research on super-resolution of biogenic emission maps via deep learning and domain adaptation",
         tags: ["pytorch", "remote-sensing", "super-resolution"],
-        linkText: "→ github.com/polimi-ispl/sr-bvoc", linkUrl: "https://github.com/polimi-ispl/sr-bvoc" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/polimi-ispl/sr-bvoc" },
       { code: "SMPL_04", meta: "2024", title: "MAGCRN", note: 392,
         desc: "Spatiotemporal graph neural network framework to forecast NO2 concentration using future covariates",
         tags: ["gnn", "forecasting", "pytorch"],
-        linkText: "→ github.com/polimi-ispl/MAGCRN", linkUrl: "https://github.com/polimi-ispl/MAGCRN" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/polimi-ispl/MAGCRN" },
       { code: "SMPL_03", meta: "2020–21", title: "co²des", note: 440,
         desc: "Environment for enhanced live coding performances — an interactive installation where the audience shapes the sound through a web app",
         tags: ["live-coding", "webapp"],
-        linkText: "→ github.com/antonelse/co2des", linkUrl: "https://github.com/antonelse/co2des" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/antonelse/co2des" },
       { code: "SMPL_02", meta: "2021", title: "Analog Shutterino",
         desc: "Shutter trigger for analog cameras — linear actuator and ultrasonic sensor on Arduino, used as a nighttime phototrap",
         tags: ["arduino", "analog-photography"],
@@ -1504,10 +1445,18 @@ const SITE_DATA = {
       { code: "SMPL_01", meta: "2020", title: "toneZ", note: 410,
         desc: "Browser-based tonnetz diagram viewer for visualizing harmonic relationships in music",
         tags: ["p5.js", "tone.js"],
-        linkText: "→ github.com/LoreTalone/toneZ", linkUrl: "https://github.com/LoreTalone/toneZ/blob/master/README.md" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/LoreTalone/toneZ/blob/master/README.md" },
     ],
 
     AUDIO: [
+      { code: "AUD_07", meta: "2026", title: "somewhen", note: 230,
+        desc: "A nine-track live album recorded in a single take without overdubs, from two sessions in September 2026. Raw and unpolished on purpose.",
+        tags: ["dark-ambient", "drone", "improvisation"],
+        linkText: "→ listen on Bandcamp", linkUrl: "https://antonelse.bandcamp.com/album/somewhen" },
+      { code: "AUD_06", meta: "2026", title: "Attrito – Interactive Site-Specific Sound Installation", note: 220,
+        desc: "Team project at La Capsula (32-dome loudspeaker system), BASE Milano. Immersive installation on the environmental cost of movement: visitors' motion is tracked in real time and drives spatialization and a reactive audio composition. Spatial audio workflow with Ambisonics. Presented at Linecheck Music Meeting & Festival, Milan.",
+        tags: ["ambisonics", "installation"],
+        linkText: "→ view on Linecheck", linkUrl: "https://www.linecheck.it/meeting/program/360-a-spatial-sound-installation-attrito-supported-by-siae-per-chi-crea/" },
       { code: "AUD_05", meta: "2026", title: "live from giardino", note: 210,
         desc: "Live album recorded with AnDrone.io, the DIY drone synthesizer built on the Axoloti/Ksoloti DSP board",
         tags: ["androne.io", "live", "drone-synth"],
@@ -1584,10 +1533,10 @@ const SITE_DATA = {
     CODING: [
       { code: "STARS", meta: "GitHub", title: "Starred Repos",
         desc: "Repos I've starred over the years — tools, libraries and projects worth remembering",
-        linkText: "→ view stars on GitHub", linkUrl: "https://github.com/antonelse?tab=stars" },
+        linkText: "→ view on GitHub", linkUrl: "https://github.com/antonelse?tab=stars" },
     ],
 
-    WATCHING: [
+    VISUALIZING: [
       { code: "ARCHIVE", meta: "Instagram", title: "___d.kun",
         desc: "A container of cover art from the records I've listened to over the years",
         linkText: "→ view on Instagram", linkUrl: "https://www.instagram.com/___d.kun/" },
@@ -1599,25 +1548,25 @@ const SITE_DATA = {
         linkText: "→ listen on SoundCloud", linkUrl: "https://soundcloud.com/thefavela" },
       { code: "COLLECTION", meta: "Bandcamp", title: "Bandcamp Collection",
         desc: "Albums I've bought — a running log of textures and rhythms that keep pulling me back in",
-        linkText: "→ view collection on Bandcamp", linkUrl: "https://bandcamp.com/antonelse" },
+        linkText: "→ view on Bandcamp", linkUrl: "https://bandcamp.com/antonelse" },
       { code: "COLLECTION", meta: "Discogs", title: "Discogs Collection",
         desc: "Vinyl I own — sleeves and grooves that reward slow, deliberate listening",
-        linkText: "→ view collection on Discogs", linkUrl: "https://www.discogs.com/user/AntonElse/collection" },
+        linkText: "→ view on Discogs", linkUrl: "https://www.discogs.com/user/AntonElse/collection" },
     ],
 
     WISHING: [
       { code: "WISH", meta: "Bandcamp", title: "Bandcamp Wishlist",
         desc: "Records I've been meaning to pick up — updated whenever something new catches my ear",
-        linkText: "→ view wishlist on Bandcamp", linkUrl: "https://bandcamp.com/antonelse/wishlist" },
+        linkText: "→ view on Bandcamp", linkUrl: "https://bandcamp.com/antonelse/wishlist" },
       { code: "WANT", meta: "Discogs", title: "Discogs Wantlist",
         desc: "Vinyl I'm hunting for — the kind of pressings that reward patience and a good needle",
-        linkText: "→ view wantlist on Discogs", linkUrl: "https://www.discogs.com/wantlist?user=antonelse" },
+        linkText: "→ view on Discogs", linkUrl: "https://www.discogs.com/wantlist?user=antonelse" },
     ],
 
-    CRATES: [
+    DIGGING: [
       { code: "CRATES", meta: "antonelse.github.io", title: "Crates",
         desc: "Short write-ups, running lists and odds and ends, blog-style — whatever I'm digging through, curious about or want to remember, added to whenever something new comes up",
-        linkText: "→ browse the crates", linkUrl: "crates.html" },
+        linkText: "→ browse", linkUrl: "crates.html" },
     ],
   },
 };
@@ -1662,7 +1611,7 @@ const SITE_DATA = {
           <h3 class="sample-title">${it.title}</h3>
           <div class="sample-desc">${it.desc}</div>
           ${tagsHtml}
-          <div class="sample-link" style="margin-top:8px;"><a href="${it.linkUrl}" target="_blank" rel="noopener">${it.linkText}</a></div>
+          ${it.linkUrl ? `<div class="sample-link" style="margin-top:8px;"><a href="${it.linkUrl}" target="_blank" rel="noopener">${it.linkText}</a></div>` : ''}
         </div>`;
     }).join('');
   }
@@ -1679,10 +1628,10 @@ const SITE_DATA = {
   renderSampleCards('projImagesSamples', SITE_DATA.PROJECTS.IMAGES);
 
   renderSampleCards('infCodingSamples', SITE_DATA.INFLUENCES.CODING);
-  renderSampleCards('infWatchingSamples', SITE_DATA.INFLUENCES.WATCHING);
+  renderSampleCards('infVisualizingSamples', SITE_DATA.INFLUENCES.VISUALIZING);
   renderSampleCards('infListeningSamples', SITE_DATA.INFLUENCES.LISTENING);
   renderSampleCards('infWishingSamples', SITE_DATA.INFLUENCES.WISHING);
-  renderSampleCards('infCratesSamples', SITE_DATA.INFLUENCES.CRATES);
+  renderSampleCards('infDiggingSamples', SITE_DATA.INFLUENCES.DIGGING);
 })();
 (function(){
   // ---- Web Audio: simple 8-bit square wave blip ----
@@ -1899,7 +1848,7 @@ const SITE_DATA = {
   themeBtn.addEventListener('click', ()=>{
     isLight = !isLight;
     document.body.classList.toggle('theme-light', isLight);
-    themeBtn.textContent = isLight ? '☾' : '☀';
+    themeBtn.textContent = isLight ? '☾ DARK' : '☀ LIGHT';
     themeBtn.classList.toggle('is-active', isLight);
     themeBtn.setAttribute('aria-pressed', String(isLight));
   });
@@ -2004,8 +1953,8 @@ const SITE_DATA = {
     let t = 0;
 
     // mouse-reactive frequency ratios (a:b) driven by X/Y position only, eased
-    let targetFreqA = 1.50, targetFreqB = 6.20;
-    let freqA = 1.50, freqB = 6.20;
+    let targetFreqA = 2.10, targetFreqB = 6.50;
+    let freqA = 2.10, freqB = 6.50;
     let phaseClock = 0; // slowly oscillates the phase offset for extra shape variety
 
     const freqXEl = document.getElementById('freqXVal');
@@ -2019,14 +1968,14 @@ const SITE_DATA = {
       targetFreqB = 1 + ny * 7;      // 1..8, continuous
     }
     canvas.addEventListener('mousemove', (e)=> updateFromPointer(e.clientX, e.clientY));
-    canvas.addEventListener('mouseleave', ()=>{ targetFreqA = 1.50; targetFreqB = 6.20; });
+    canvas.addEventListener('mouseleave', ()=>{ targetFreqA = 2.10; targetFreqB = 6.50; });
     canvas.addEventListener('touchmove', (e)=>{
       if(e.touches && e.touches[0]){
         updateFromPointer(e.touches[0].clientX, e.touches[0].clientY);
         e.preventDefault();
       }
     }, {passive:false});
-    canvas.addEventListener('touchend', ()=>{ targetFreqA = 1.50; targetFreqB = 6.20; });
+    canvas.addEventListener('touchend', ()=>{ targetFreqA = 2.10; targetFreqB = 6.50; });
 
     function getLcdColor(){
       const cs = getComputedStyle(document.body);
@@ -2374,7 +2323,7 @@ const SITE_DATA = {
         toggleSection(e.currentTarget);
       }
     }
-    document.querySelectorAll('.phrase > .phrase-head').forEach(head=>{
+    document.querySelectorAll('.phrase > .phrase-head:not(.static)').forEach(head=>{
       head.addEventListener('click', ()=> toggleSection(head));
       head.addEventListener('keydown', onHeadKeydown);
     });
@@ -2388,9 +2337,8 @@ const SITE_DATA = {
       let allCollapsed = true;
       collapseAllBtn.addEventListener('click', ()=>{
         allCollapsed = !allCollapsed;
-        document.querySelectorAll('.phrase').forEach(el => el.classList.toggle('collapsed', allCollapsed));
-        document.querySelectorAll('.contact').forEach(el => el.classList.toggle('collapsed', allCollapsed));
-        document.querySelectorAll('.phrase-head, .collapse-header').forEach(head=>{
+        document.querySelectorAll('.phrase:not(#sec-contact)').forEach(el => el.classList.toggle('collapsed', allCollapsed));
+                document.querySelectorAll('.phrase-head:not(.static), .collapse-header').forEach(head=>{
           head.setAttribute('aria-expanded', String(!allCollapsed));
         });
         collapseAllBtn.classList.toggle('is-active', allCollapsed);
